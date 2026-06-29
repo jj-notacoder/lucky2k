@@ -49,37 +49,48 @@ export default function FlavorCard({
         </div>
       ) : title && title.toLowerCase().includes('cinnamon') ? (
         <>
-          {/* red words ABOVE the card with a small gap */}
-          <div className="pointer-events-none absolute bottom-full mb-4 left-3 z-40 flex flex-col items-start leading-[0.82]">
+          {/* Red Text Wrapper (Outside Top) */}
+          <div className="absolute bottom-full left-0 mb-1 md:mb-2 z-40 pointer-events-none">
             <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">CINNAMON</span>
-            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">SUGAR</span>
           </div>
-          {/* white words INSIDE the card top with a gap from the border */}
-          <div className="pointer-events-none absolute top-4 left-3 z-40 flex flex-col items-start leading-[0.88]">
-            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">+VANILLA</span>
-            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CUSTARD</span>
+          {/* Inside Top Wrapper */}
+          <div className="absolute top-2 left-2 z-40 flex flex-col items-start leading-[0.88] pointer-events-none">
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">SUGAR</span>
+            <span className="font-['Clarendon'] text-sm xl:text-base font-bold text-white drop-shadow-md mt-1">+VANILLA CUSTARD</span>
           </div>
         </>
       ) : title && title.toLowerCase().includes('chocolate') ? (
         <>
-          {/* white word INSIDE the card, lower area */}
-          <span className="pointer-events-none absolute bottom-3 left-3 z-40 font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CHOCOLATE</span>
-          {/* red word floats BELOW the card border with a gap */}
-          <span className="pointer-events-none absolute left-3 top-full mt-4 z-40 font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">HAZELNUT</span>
+          {/* Inside Bottom Wrapper */}
+          <div className="absolute bottom-2 left-2 z-40 pointer-events-none">
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CHOCOLATE</span>
+          </div>
+          {/* Red Text Wrapper (Outside Bottom) */}
+          <div className="absolute top-full left-0 mt-1 md:mt-2 z-40 pointer-events-none">
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">HAZELNUT</span>
+          </div>
         </>
       ) : title && title.toLowerCase().includes('orange') ? (
         <>
-          {/* red word ABOVE the card with a small gap */}
-          <span className="pointer-events-none absolute bottom-full mb-4 left-3 z-40 font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">ORANGE</span>
-          {/* white word INSIDE the card top with a gap from the border */}
-          <span className="pointer-events-none absolute top-4 left-3 z-40 font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CARDAMOM</span>
+          {/* Red Text Wrapper (Outside Top) */}
+          <div className="absolute bottom-full left-0 mb-1 md:mb-2 z-40 pointer-events-none">
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">ORANGE</span>
+          </div>
+          {/* Inside Top Wrapper */}
+          <div className="absolute top-2 left-2 z-40 pointer-events-none">
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CARDAMOM</span>
+          </div>
         </>
       ) : title && title.toLowerCase().includes('strawberr') ? (
         <>
-          {/* white word sits INSIDE the card, lower area */}
-          <span className="pointer-events-none absolute bottom-3 left-3 z-40 font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">STRAWBERRIES</span>
-          {/* red word floats BELOW the card border with a gap */}
-          <span className="pointer-events-none absolute left-3 top-full mt-4 z-40 font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">&amp; CREAM</span>
+          {/* Inside Bottom Wrapper */}
+          <div className="absolute bottom-2 left-2 z-40 pointer-events-none">
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">STRAWBERRIES</span>
+          </div>
+          {/* Red Text Wrapper (Outside Bottom) */}
+          <div className="absolute top-full left-0 mt-1 md:mt-2 z-40 pointer-events-none">
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">&amp; CREAM</span>
+          </div>
         </>
       ) : null}
 
