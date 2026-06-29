@@ -1,0 +1,23 @@
+.pill-nav {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Add this to force center alignment */
+  margin: 0 auto; /* Add this to ensure the block centers itself */
+}
+
+.pill-list {
+  list-style: none;
+  display: flex;
+  align-items: stretch;
+  justify-content: center; /* Add this to center the list items */
+  gap: var(--pill-gap, 0.25rem);
+  margin: 0;
+  padding: 3px;
+  height: 100%;
+}
+
+.pill {
+  font-family: 'Clarendon', var(--font-display), Georgia, serif;
+  text-transform: uppercase;
+}
