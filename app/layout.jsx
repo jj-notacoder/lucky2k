@@ -3,7 +3,7 @@ import { LangProvider } from '@/lib/i18n';
 import './globals.css';
 
 /* Clarendon stand-in (heavy retro serif) until a licensed Clarendon is added. */
-const bitter = Bitter({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-display', display: 'swap' });
+const bitter = Bitter({ subsets: ['latin'], weight: ['600', '700', '800', '900'], variable: '--font-display', display: 'swap' });
 const lora = Lora({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-body', display: 'swap' });
 /* Modhesh stand-in (rounded retro Arabic display). */
 const lalezar = Lalezar({ subsets: ['arabic', 'latin'], weight: '400', variable: '--font-ar', display: 'swap' });

@@ -453,3 +453,77 @@ img { display: block; max-width: 100%; }
   html { scroll-behavior: auto; }
   .hero__logo-float, .hero__sun { will-change: auto; }
 }
+
+/* =========================================================================
+   FLAVORS SECTION
+   ========================================================================= */
+
+/* Font helpers (next/font vars → usable as classes) */
+.ff-display { font-family: var(--display); }
+.ff-body { font-family: var(--body); }
+
+/* Vertical candy stripes */
+.candy-stripes {
+  background: repeating-linear-gradient(
+    90deg,
+    #ffc5d0 0px,
+    #ffc5d0 40px,
+    #ffffff 40px,
+    #ffffff 43px
+  );
+}
+
+/* White scalloped top edge — semicircles hanging down into the pink */
+.scallop-top {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 6;
+  background: radial-gradient(circle at 30px 0, #fff 29px, transparent 30px);
+  background-size: 60px 40px;
+  background-repeat: repeat-x;
+}
+
+/* Neon "THE FLAVORS" header */
+.neon-flavors {
+  color: #fff;
+  -webkit-text-stroke: 1px #ef2e31;
+  text-shadow: 0 0 5px #ef2e31, 0 0 15px #ef2e31, 0 0 30px #ef2e31;
+}
+
+/* Glossy hover glare that sweeps across a card */
+.glare { position: relative; overflow: hidden; }
+.glare::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  transform: translateX(-130%);
+  transition: transform 0.65s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.flavor-card:hover .glare::after { transform: translateX(130%); }
+
+/* Translucent tape accents */
+.tape {
+  position: absolute;
+  width: 62px;
+  height: 22px;
+  background: rgba(239, 46, 49, 0.28);
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 1px 4px rgba(92, 15, 16, 0.15);
+  z-index: 20;
+  pointer-events: none;
+}
+.tape--tl { top: -10px; left: -14px; transform: rotate(-45deg); }
+.tape--br { bottom: -10px; right: -14px; transform: rotate(-45deg); }
+.tape--tr { top: -10px; right: -14px; transform: rotate(45deg); }
+.tape--bl { bottom: -10px; left: -14px; transform: rotate(45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .glare::after { transition: none; }
+}

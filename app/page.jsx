@@ -1,12 +1,12 @@
 import Hero from '@/components/Hero';
-import Sections from '@/components/Sections';
+import FlavorsSection from '@/components/FlavorsSection';
 
 export default function Page() {
   return (
     <>
       <main>
         <Hero />
-        <Sections />
+        <FlavorsSection />
       </main>
     </>
   );
