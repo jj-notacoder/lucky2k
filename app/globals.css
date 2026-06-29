@@ -47,7 +47,7 @@
 .w-\[260px\] { width: 260px; }
 .h-\[32px\] { height: 32px; }
 .max-w-\[900px\] { max-width: 900px; }
-.h-\[20vh\] { height: 20vh; }
+.h-\[20vh\] { height: 20vh !important; }
 
 .h-16 { height: 4rem; }
 .top-\[12vh\] { top: 12vh; }
@@ -56,6 +56,26 @@
 .max-w-\[100vw\] { max-width: 100vw; }
 .w-max { width: max-content !important; }
 .h-\[25vh\] { height: 25vh; }
+
+.w-\[240px\] { width: 240px; }
+.h-\[36px\] { height: 36px; }
+.mt-6 { margin-top: 1.5rem; }
+
+.top-\[6vh\] { top: 6vh; }
+.translate-y-\[15\%\] { transform: translateY(15%) !important; }
+.translate-y-\[20\%\] { transform: translateY(20%) !important; }
+.h-\[22vh\] { height: 22vh !important; }
+.-translate-x-1\/2.translate-y-\[15\%\] {
+  transform: translate(-50%, 15%) !important;
+}
+.-translate-x-1\/2.translate-y-\[20\%\] {
+  transform: translate(-50%, 20%) !important;
+}
+
+.top-\[39vh\] { top: 39vh; }
+.h-14 { height: 3.5rem; }
+.top-\[10vh\] { top: 10vh; }
+.mt-2 { margin-top: 0.5rem; }
 
 @media (min-width: 768px) {
   .md\:pt-32 { padding-top: 8rem; }
@@ -75,6 +95,26 @@
   .md\:top-\[15vh\] { top: 15vh; }
   .md\:w-\[240px\] { width: 240px; }
   .md\:h-\[30vh\] { height: 30vh; }
+  
+  .md\:h-\[26vh\] { height: 26vh !important; }
+  .md\:h-\[48px\] { height: 48px; }
+  .md\:mt-8 { margin-top: 2rem; }
+
+  .md\:top-\[8vh\] { top: 8vh; }
+  .md\:translate-y-\[25\%\] { transform: translateY(25%) !important; }
+  .md\:translate-y-\[30\%\] { transform: translateY(30%) !important; }
+  .md\:h-\[28vh\] { height: 28vh !important; }
+  .-translate-x-1\/2.md\:translate-y-\[25\%\] {
+    transform: translate(-50%, 25%) !important;
+  }
+  .-translate-x-1\/2.md\:translate-y-\[30\%\] {
+    transform: translate(-50%, 30%) !important;
+  }
+
+  .md\:top-\[36vh\] { top: 36vh; }
+  .md\:top-\[12vh\] { top: 12vh; }
+  .md\:h-\[64px\] { height: 64px; }
+  .md\:mt-4 { margin-top: 1rem; }
 }
 
 @media (min-width: 1024px) {
@@ -82,6 +122,10 @@
   .lg\:w-\[400px\] { width: 400px; }
   .lg\:h-\[48px\] { height: 48px; }
   .lg\:w-\[280px\] { width: 280px; }
+  
+  .lg\:w-\[380px\] { width: 380px; }
+  .lg\:h-\[56px\] { height: 56px; }
+  .lg\:h-\[72px\] { height: 72px; }
 }
 
 /* =========================================================================

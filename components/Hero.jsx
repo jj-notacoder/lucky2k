@@ -1,18 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion, useReducedMotion, useScroll, useSpring, useMotionValueEvent, useTransform } from 'framer-motion';
 import PillNav from './PillNav';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const IG = 'https://www.instagram.com/luckytwothousand/';
 
 export default function Hero() {
   const heroRef = useRef(null);
-  const sunRef = useRef(null);
   const reduce = useReducedMotion();
 
   // Scroll Progress Hooks
@@ -23,10 +18,17 @@ export default function Hero() {
     damping: 30,
     restDelta: 0.001
   });
+  // Drops the sun 300px down by the time the user scrolls 600px
+  const sunScrollY = useTransform(scrollY, [0, 600], [0, 300]);
 
   // State Management
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isPastHero, setIsPastHero] = useState(false);
+  const [isArabic, setIsArabic] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+  }, [isArabic]);
 
   // Scroll Listener via MotionValue Event
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -43,27 +45,7 @@ export default function Hero() {
     }
   });
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // GSAP ScrollTrigger (yPercent: 100, scrub: true) on the Setting Sun wrapper.
-      if (sunRef.current) {
-        gsap.set(sunRef.current, { xPercent: -50, x: 0 });
-        gsap.to(sunRef.current, {
-          yPercent: 100,
-          xPercent: -50,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          },
-        });
-      }
-    }, heroRef);
 
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section id="hero" ref={heroRef} className="relative w-full h-screen overflow-hidden bg-[#FFC5D0]">
@@ -82,11 +64,11 @@ export default function Hero() {
 
       {/* THE SMART NAVBAR (CSS GRID REFACTOR) */}
       <motion.nav 
-        initial={{ y: 0 }}
-        animate={{ y: isNavVisible ? 0 : "-100%" }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: isNavVisible ? 0 : "-100%", opacity: 1 }}
+        transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
         onMouseLeave={() => { if (scrollY.get() > 50) setIsNavVisible(false); }}
-        className="fixed top-0 w-full h-20 z-[55] grid grid-cols-3 items-center px-6 md:px-10 bg-[#FFC5D0]/90 backdrop-blur-md"
+        className="fixed top-0 w-full h-14 md:h-16 z-[55] grid grid-cols-3 items-center px-6 md:px-10 bg-[#FFC5D0]/90 backdrop-blur-md"
       >
         
         {/* LEFT COLUMN: Contextual Logo */}
@@ -102,9 +84,13 @@ export default function Hero() {
         
         {/* CENTER COLUMN: The PillNav (Locked to True Center) */}
         {/* Grid guarantees this column spans the exact middle 33.33% of the screen */}
-        <div className="flex justify-center items-center z-10 w-full">
+        <div className={`flex justify-center items-center z-10 w-full transition-all duration-300 ${isArabic ? "font-['Modhesh']" : "font-['Clarendon']"}`}>
           <PillNav 
-            items={[
+            items={isArabic ? [
+              { label: 'النكهات', href: '#flavors' },
+              { label: 'من نحن', href: '#about' },
+              { label: 'الموقع', href: '#location' }
+            ] : [
               { label: 'Flavors', href: '#flavors' },
               { label: 'About', href: '#about' },
               { label: 'Location', href: '#location' }
@@ -117,8 +103,11 @@ export default function Hero() {
         
         {/* RIGHT COLUMN: Controls */}
         <div className="flex justify-end items-center gap-4 z-20">
-          <button className="border-2 border-[#EF2E31] text-[#EF2E31] px-4 py-1 rounded-full text-sm font-bold hover:bg-[#EF2E31] hover:text-[#FFC5D0] transition-colors">
-            EN / ع
+          <button 
+            onClick={() => setIsArabic(!isArabic)}
+            className="border-2 border-[#EF2E31] text-[#EF2E31] px-4 py-1 rounded-full text-sm font-bold hover:bg-[#EF2E31] hover:text-[#FFC5D0] transition-colors"
+          >
+            {isArabic ? "EN" : "ع"}
           </button>
           
           {/* Instagram SVG Icon */}
@@ -132,47 +121,52 @@ export default function Hero() {
       </motion.nav>
 
       {/* Z-20: FOREGROUND TEXT & LOGO (Viewport-based upper alignment) */}
-      <div className="absolute top-[12vh] md:top-[15vh] left-0 right-0 flex flex-col items-center justify-start z-20 w-full pointer-events-none">
+      <div className="absolute top-[10vh] md:top-[12vh] left-0 right-0 flex flex-col items-center justify-start z-20 w-full pointer-events-none">
          
          {/* Main Logo */}
-         {/* Reattached the Framer Motion breathing effect and spring entrance */}
-         <motion.div
-           initial={{ scale: 0.8 }}
-           animate={{ 
-             scale: 1,
-             y: reduce ? 0 : [0, -12, 0]
-           }}
-           transition={{
-             scale: { type: 'spring', stiffness: 120, damping: 14, delay: 0.05 },
-             y: { duration: 3, repeat: Infinity, ease: 'easeInOut' }
-           }}
-           className="will-change-transform pointer-events-auto"
-         >
-           <img 
-             src="/donutfinal/logo.png" 
-             alt="Lucky 2000 Logo" 
-             className="w-[180px] md:w-[240px] lg:w-[280px] object-contain" 
-           />
-         </motion.div>
-         
-         {/* Subtitle */}
-         <img 
-           src="/donutfinal/donutsfrom_sunset.png" 
+         <motion.img 
+           src="/donutfinal/logo.png" 
+           alt="Lucky 2000 Logo" 
+           className="w-[240px] md:w-[320px] lg:w-[380px] object-contain pointer-events-auto transition-transform duration-300" 
+           initial={{ scale: 0.8, opacity: 0, y: 40 }}
+           animate={{ scale: 1, opacity: 1, y: 0 }}
+           transition={{ type: "spring", bounce: 0.5, duration: 0.8, delay: 0.2 }}
+         />
+          
+         {/* Animated Subtitle (Dynamic EN/AR) */}
+         <motion.img 
+           src={isArabic ? "/donutfinal/donutsfrom sunset - arabic.png" : "/donutfinal/donutsfrom_sunset.png"} 
            alt="Doughnuts from sunset" 
-           className="h-[32px] md:h-[40px] lg:h-[48px] mt-4 object-contain pointer-events-auto" 
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+           className={`object-contain pointer-events-auto transition-all duration-300 ${
+             isArabic 
+               ? "h-[48px] md:h-[64px] lg:h-[72px] mt-2 md:mt-4" 
+               : "h-[36px] md:h-[48px] lg:h-[56px] mt-6 md:mt-8"
+           }`} 
          />
       </div>
 
-      {/* Z-10: THE SETTING SUN (PERFECTLY CENTERED) */}
-      <div 
-        ref={sunRef} 
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1200px] max-w-[100vw] h-[25vh] md:h-[30vh] z-10 pointer-events-none"
-      >
-         <img 
-           src="/donutfinal/sun.png" 
-           alt="Setting Sun" 
-           className="w-full h-full object-cover object-top" 
-         />
+      {/* Z-10: THE SETTING SUN */}
+      {/* 1. Static Wrapper: Handles absolute centering AND the static Y-offset */}
+      <div className="absolute bottom-0 inset-x-0 w-full flex justify-center translate-y-[20%] md:translate-y-[30%] z-10 pointer-events-none">
+        
+        {/* 2. Animated Container: ONLY handles the scroll physics (no Tailwind transforms) */}
+        <motion.div 
+          style={{ y: sunScrollY }} 
+          className="w-[1200px] max-w-[100vw] h-[22vh] md:h-[28vh] flex justify-center"
+        >
+          <motion.img 
+            src="/donutfinal/sun.png" 
+            alt="Setting Sun" 
+            className="w-full h-full object-cover object-top"
+            initial={{ y: 200, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 60, damping: 20, delay: 0.3 }}
+          />
+        </motion.div>
+        
       </div>
 
     </section>
