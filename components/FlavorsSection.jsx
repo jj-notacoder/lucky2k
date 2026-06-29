@@ -55,36 +55,37 @@ export default function FlavorsSection() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center"
         >
-          <p className="ff-display font-extrabold tracking-[0.14em] text-[#EF2E31] text-[clamp(12px,1.4vw,16px)]">
+          <p className="font-['Clarendon'] text-xl lg:text-2xl font-bold tracking-widest text-[#EF2E31]">
             DOUGHNUTS BUT ABU DHABI
           </p>
           <h2 className="neon-flavors ff-display mt-3 font-black italic tracking-wide text-[clamp(42px,8vw,88px)]">
             THE FLAVORS
           </h2>
+          <div className="h-1.5 w-3/4 mx-auto bg-white rounded-full shadow-[0_0_10px_#EF2E31,0_0_20px_#EF2E31,0_0_30px_#EF2E31] mt-4"></div>
         </motion.div>
 
-        {/* top row — 4 flavours (grid unchanged) */}
+        {/* top row — 4 flavours (grid updated) */}
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-16 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 md:mt-24"
+          className="mt-28 md:mt-36 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-24 w-full max-w-7xl mx-auto z-10"
         >
           {FLAVORS.map((f) => (
             <FlavorCard key={f.key} {...f} />
           ))}
         </motion.div>
 
-        {/* lucky row — wide, constant sparks (grid unchanged) */}
+        {/* lucky row — wide, constant sparks (grid updated) */}
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          className="mt-24 flex justify-center"
+          className="flex justify-center"
         >
-          <div className="w-full max-w-3xl">
+          <div className="relative w-full max-w-4xl mx-auto mt-44 z-10">
             <FlavorCard
               wide
               img="/flavours/lucky.jpg"

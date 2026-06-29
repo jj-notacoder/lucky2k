@@ -41,24 +41,47 @@ export default function FlavorCard({
       whileHover={{ y: -6, rotate: wide ? 0 : -1 }}
       transition={{ type: 'spring', stiffness: 300, damping: 18 }}
     >
-      {/* flavor name — two-tone (solid red + white-with-red-stroke), top-left */}
-      {title && (
-        <div className={`pointer-events-none absolute z-20 -rotate-2 leading-[0.82] ${wide ? '-top-7 left-3' : '-top-5 left-1'}`}>
-          <span className="ff-display block font-black uppercase text-[#EF2E31] text-3xl lg:text-4xl [text-shadow:1px_1px_0_rgba(255,255,255,0.5)]">
-            {w1}
-          </span>
-          {w2 && (
-            <span className="ff-display block font-black uppercase text-white text-3xl lg:text-4xl [-webkit-text-stroke:2px_#EF2E31]">
-              {w2}
-            </span>
-          )}
-          {sub && (
-            <span className="ff-display mt-0.5 block font-bold uppercase text-[#EF2E31] text-xs lg:text-sm">
-              {sub}
-            </span>
-          )}
+      {/* flavor name — dynamic top-left/bottom-left broken-grid overlays */}
+      {wide ? (
+        <div className="absolute -top-14 left-0 z-40 flex items-end gap-10 pointer-events-none">
+          <span className="font-['Impact'] text-5xl xl:text-6xl text-[#EF2E31] tracking-wide">LUCKY FLAVOR</span>
+          <span className="font-['Clarendon'] text-sm xl:text-base font-bold text-[#EF2E31] mb-2 ml-4 tracking-[0.28em]">CHANGES EVERY WEEK</span>
         </div>
-      )}
+      ) : title && title.toLowerCase().includes('cinnamon') ? (
+        <>
+          {/* red words ABOVE the card with a small gap */}
+          <div className="pointer-events-none absolute bottom-full mb-4 left-3 z-40 flex flex-col items-start leading-[0.82]">
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">CINNAMON</span>
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">SUGAR</span>
+          </div>
+          {/* white words INSIDE the card top with a gap from the border */}
+          <div className="pointer-events-none absolute top-4 left-3 z-40 flex flex-col items-start leading-[0.88]">
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">+VANILLA</span>
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CUSTARD</span>
+          </div>
+        </>
+      ) : title && title.toLowerCase().includes('chocolate') ? (
+        <>
+          {/* white word INSIDE the card, lower area */}
+          <span className="pointer-events-none absolute bottom-3 left-3 z-40 font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CHOCOLATE</span>
+          {/* red word floats BELOW the card border with a gap */}
+          <span className="pointer-events-none absolute left-3 top-full mt-4 z-40 font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">HAZELNUT</span>
+        </>
+      ) : title && title.toLowerCase().includes('orange') ? (
+        <>
+          {/* red word ABOVE the card with a small gap */}
+          <span className="pointer-events-none absolute bottom-full mb-4 left-3 z-40 font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">ORANGE</span>
+          {/* white word INSIDE the card top with a gap from the border */}
+          <span className="pointer-events-none absolute top-4 left-3 z-40 font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CARDAMOM</span>
+        </>
+      ) : title && title.toLowerCase().includes('strawberr') ? (
+        <>
+          {/* white word sits INSIDE the card, lower area */}
+          <span className="pointer-events-none absolute bottom-3 left-3 z-40 font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">STRAWBERRIES</span>
+          {/* red word floats BELOW the card border with a gap */}
+          <span className="pointer-events-none absolute left-3 top-full mt-4 z-40 font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">&amp; CREAM</span>
+        </>
+      ) : null}
 
       {/* the card */}
       <div
