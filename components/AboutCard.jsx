@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Sparks from './Sparks';
+import { useCanHover } from '@/lib/useResponsivePerformance';
 
 const item = {
   hidden: { opacity: 0, y: 52 },
@@ -23,6 +24,7 @@ export default function AboutCard({
   badgeClass = '',
   textClass = '',
 }) {
+  const canHover = useCanHover();
   const [hovered, setHovered] = useState(false);
   const ref = useRef(null);
 
@@ -32,6 +34,7 @@ export default function AboutCard({
   const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 18 });
 
   const onMove = (e) => {
+    if (!canHover) return;
     const r = ref.current?.getBoundingClientRect();
     if (!r) return;
     mx.set((e.clientX - r.left) / r.width - 0.5);
@@ -42,16 +45,25 @@ export default function AboutCard({
     my.set(0);
     setHovered(false);
   };
+  const badgeDimensions = badge?.includes('icon-time')
+    ? { width: 207, height: 166 }
+    : badge?.includes('icon-star')
+      ? { width: 421, height: 388 }
+      : { width: 339, height: 253 };
 
   return (
     <motion.div
       ref={ref}
       variants={item}
       onMouseMove={onMove}
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={() => canHover && setHovered(true)}
       onMouseLeave={onLeave}
-      style={{ rotateX, rotateY, transformPerspective: 1000 }}
-      className="about-card group relative [transform-style:preserve-3d]"
+      style={
+        canHover
+          ? { rotateX, rotateY, transformPerspective: 1000, willChange: 'transform, opacity' }
+          : { willChange: 'transform, opacity' }
+      }
+      className={`about-card relative [transform-style:preserve-3d] transform-gpu ${canHover ? 'group' : ''}`}
     >
       {/* card container */}
       <div className="relative overflow-hidden rounded-3xl border-2 border-[#EF2E31] shadow-[0_0_20px_rgba(239,46,49,0.5)] transition-shadow duration-500 group-hover:shadow-[0_0_35px_rgba(239,46,49,0.85)] bg-white z-10 aspect-[16/10] h-full w-full">
@@ -60,6 +72,10 @@ export default function AboutCard({
           src={img}
           alt=""
           aria-hidden="true"
+          width={438}
+          height={284}
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover"
           draggable="false"
         />
@@ -77,13 +93,17 @@ export default function AboutCard({
         <img
           src={badge}
           alt={badgeAlt}
+          width={badgeDimensions.width}
+          height={badgeDimensions.height}
+          loading="lazy"
+          decoding="async"
           className={`pointer-events-none absolute select-none z-30 ${badgeClass}`}
           draggable="false"
         />
       )}
 
       {/* hover sparks (neon pink / red) */}
-      {hovered && (
+      {canHover && hovered && (
         <div className="pointer-events-none absolute inset-0 z-40">
           <Sparks intense />
         </div>

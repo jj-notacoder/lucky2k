@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLang } from '@/lib/i18n';
+import { useCanHover } from '@/lib/useResponsivePerformance';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +13,7 @@ const IG = 'https://www.instagram.com/luckytwothousand/';
 
 export default function Nav() {
   const { t, lang, toggle } = useLang();
+  const canHover = useCanHover();
   const logoRef = useRef(null);
 
   /* Delayed sticky logo: hidden in the hero, slides in when About hits the top. */
@@ -48,7 +50,7 @@ export default function Nav() {
     <header className="nav">
       {/* LEFT — delayed sticky logo */}
       <a href="#top" className="nav-logo" ref={logoRef} aria-label="Lucky 2000 home">
-        <img src="/logo.png" alt="" />
+        <img src="/logo.webp" alt="" width={561} height={445} loading="eager" decoding="async" />
         <span className="nav-logo__word">Lucky&nbsp;2000</span>
       </a>
 
@@ -59,9 +61,10 @@ export default function Nav() {
             key={href}
             href={href}
             className="nav-link"
-            whileHover={{ y: -3, scale: 1.06 }}
+            whileHover={canHover ? { y: -3, scale: 1.06 } : undefined}
             whileTap={{ y: -1, scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 420, damping: 18 }}
+            style={{ willChange: 'transform' }}
           >
             {label}
           </motion.a>

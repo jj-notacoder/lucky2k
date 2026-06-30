@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useCallback, useEffect, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useCanHover, useIsMobileViewport } from '@/lib/useResponsivePerformance';
 
 const IG = 'https://instagram.com/luckytwothousand';
 
 /* Box → revealed flavor + image (5 = the lucky winner). */
 const REVEAL = {
-  1: { name: 'Cinnamon Sugar + Vanilla Custard', img: '/donutfinal/game-box1.png' },
-  2: { name: 'Chocolate Hazelnut', img: '/donutfinal/game-box2.png' },
-  3: { name: 'Orange Cardamom', img: '/donutfinal/game-box3.png' },
-  4: { name: 'Strawberries & Cream', img: '/donutfinal/game-box4.png' },
-  5: { name: 'Lucky Flavor!', img: '/donutfinal/game-box5.png' },
+  1: { name: 'Cinnamon Sugar + Vanilla Custard', img: '/donutfinal/game-box1.webp' },
+  2: { name: 'Chocolate Hazelnut', img: '/donutfinal/game-box2.webp' },
+  3: { name: 'Orange Cardamom', img: '/donutfinal/game-box3.webp' },
+  4: { name: 'Strawberries & Cream', img: '/donutfinal/game-box4.webp' },
+  5: { name: 'Lucky Flavor!', img: '/donutfinal/game-box5.webp' },
 };
 
 /* Slot-machine scatter — hardcoded → SSR-stable (no hydration drift). */
@@ -32,19 +33,26 @@ const boxItem = {
 
 export default function GameSection() {
   const [selectedBox, setSelectedBox] = useState(null);
+  const reduce = useReducedMotion();
+  const canHover = useCanHover();
+  const isMobile = useIsMobileViewport();
 
   const isLucky = selectedBox === 5;
   const data = selectedBox ? REVEAL[selectedBox] : null;
+  const visibleSlots = reduce ? [] : SLOTS.slice(0, isMobile ? 3 : SLOTS.length);
+  const handleBoxSelect = useCallback((n) => setSelectedBox(n), []);
+  const handleCloseModal = useCallback(() => setSelectedBox(null), []);
+  const stopModalPropagation = useCallback((e) => e.stopPropagation(), []);
 
   /* Escape closes the modal; the card itself links out to Instagram. */
   useEffect(() => {
     if (!selectedBox) return undefined;
-    const onKey = (e) => e.key === 'Escape' && setSelectedBox(null);
+    const onKey = (e) => e.key === 'Escape' && handleCloseModal();
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('keydown', onKey);
     };
-  }, [selectedBox]);
+  }, [handleCloseModal, selectedBox]);
 
   return (
     <section id="game" className="relative w-full overflow-hidden candy-stripes pb-12 md:pb-16">
@@ -53,21 +61,29 @@ export default function GameSection() {
         <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#EF2E31]" />
         <div className="absolute inset-x-0 top-2 z-10 h-1 bg-[#EF2E31]" />
         <img
-          src="/donutfinal/top of flavours.png"
+          src="/donutfinal/top of flavours.webp"
           alt="Scalloped Transition"
+          width={1536}
+          height={1024}
+          loading="lazy"
+          decoding="async"
           className="block w-full h-auto -translate-y-[20%]"
         />
       </div>
 
       {/* background slot machines (z-0) */}
-      {SLOTS.map((m, i) => (
+      {visibleSlots.map((m, i) => (
         <motion.img
           key={i}
-          src="/donutfinal/slotmachine.png"
+          src="/donutfinal/slotmachine.webp"
           alt=""
           aria-hidden="true"
+          width={450}
+          height={450}
+          loading="lazy"
+          decoding="async"
           className="pointer-events-none absolute z-0 select-none opacity-25"
-          style={{ top: m.top, left: m.left, width: m.s, rotate: `${m.r}deg` }}
+          style={{ top: m.top, left: m.left, width: m.s, rotate: `${m.r}deg`, willChange: 'transform' }}
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 6 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: m.d }}
         />
@@ -97,12 +113,17 @@ export default function GameSection() {
 
           <div className="my-4 md:my-6 flex justify-center z-20 relative">
             <motion.img
-              src="/donutfinal/gameqmark.png"
+              src="/donutfinal/gameqmark.webp"
               alt="Mystery"
+              width={222}
+              height={280}
+              loading="lazy"
+              decoding="async"
               className="w-20 md:w-24 select-none drop-shadow-[0_8px_24px_rgba(239,46,49,0.5)]"
               draggable="false"
-              animate={{ scale: [1, 1.05, 1], y: [0, -6, 0] }}
+              animate={reduce ? { opacity: 1 } : { scale: [1, 1.05, 1], y: [0, -6, 0] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ willChange: 'transform, opacity' }}
             />
           </div>
 
@@ -119,17 +140,22 @@ export default function GameSection() {
                 key={n}
                 type="button"
                 variants={boxItem}
-                onClick={() => setSelectedBox(n)}
-                whileHover={{ scale: 1.1, rotate: -5 }}
+                onClick={() => handleBoxSelect(n)}
+                whileHover={canHover ? { scale: 1.1, rotate: -5 } : undefined}
                 whileTap={{ scale: 0.95, rotate: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 16 }}
                 aria-label={`Open mystery box ${n}`}
-                className="group relative outline-none"
+                className={`relative min-h-11 touch-manipulation outline-none transform-gpu ${canHover ? 'group' : ''}`}
+                style={{ willChange: 'transform, opacity' }}
               >
                 <img
-                  src="/donutfinal/gamebox.png"
+                  src="/donutfinal/gamebox.webp"
                   alt=""
                   aria-hidden="true"
+                  width={479}
+                  height={520}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full select-none drop-shadow-[0_10px_18px_rgba(92,15,16,0.25)] transition-[filter] duration-300 group-hover:drop-shadow-[0_0_28px_rgba(255,105,180,0.95)]"
                   draggable="false"
                 />
@@ -146,6 +172,7 @@ export default function GameSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.6 }}
           transition={{ duration: 0.5, delay: 0.1 }}
+          style={{ willChange: 'transform, opacity' }}
           className="mx-auto mt-8 md:mt-10 max-w-xl rounded-2xl border-2 border-[#EF2E31] bg-white/80 px-8 py-5 text-center shadow-[0_0_20px_rgba(239,46,49,0.5)] backdrop-blur-sm"
         >
           <p className="font-['Clarendon'] text-xl font-black uppercase tracking-wide text-[#EF2E31] md:text-2xl">
@@ -160,7 +187,7 @@ export default function GameSection() {
           <motion.div
             key="game-modal"
             className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
-            onClick={() => setSelectedBox(null)}
+            onClick={handleCloseModal}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -171,13 +198,14 @@ export default function GameSection() {
               href={IG}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
+              onClick={stopModalPropagation}
               aria-label={`Open ${data.name} on Instagram`}
-              className="relative w-full max-w-2xl bg-[#FFC5D0] rounded-3xl shadow-[0_0_40px_rgba(239,46,49,0.5)] border-4 border-[#EF2E31] p-6 md:p-8 flex flex-col items-center justify-center gap-4 md:gap-6 overflow-hidden cursor-pointer group"
-              initial={{ scale: 1.1, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              className={`relative w-full max-w-2xl bg-[#FFC5D0] rounded-3xl shadow-[0_0_40px_rgba(239,46,49,0.5)] border-4 border-[#EF2E31] p-6 md:p-8 flex flex-col items-center justify-center gap-4 md:gap-6 overflow-hidden cursor-pointer ${canHover ? 'group' : ''}`}
+              initial={reduce ? { opacity: 0 } : { scale: 1.1, opacity: 0, y: 20 }}
+              animate={reduce ? { opacity: 1 } : { scale: 1, opacity: 1, y: 0 }}
+              exit={reduce ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              style={{ willChange: 'transform, opacity' }}
             >
               <div
                 className="pointer-events-none absolute inset-0 z-0"
@@ -187,8 +215,13 @@ export default function GameSection() {
               <motion.img
                 src={data.img}
                 alt="Flavor"
+                width={selectedBox === 5 ? 1536 : 612}
+                height={selectedBox === 5 ? 1024 : 408}
+                loading="lazy"
+                decoding="async"
                 className="relative z-10 w-full h-auto max-h-[40vh] md:max-h-[50vh] object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-500"
                 draggable="false"
+                style={{ willChange: 'transform, opacity' }}
               />
 
               <h2 className="relative z-10 font-['Clarendon'] text-3xl md:text-5xl text-center text-white drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] font-bold leading-tight mt-2">

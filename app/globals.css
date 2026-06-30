@@ -260,7 +260,9 @@ img { display: block; max-width: 100%; }
   color: var(--red);
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
-.lang-toggle:hover { background: rgba(239, 46, 49, 0.10); }
+@media (hover: hover) {
+  .lang-toggle:hover { background: rgba(239, 46, 49, 0.10); }
+}
 .lang-toggle .on { opacity: 1; }
 .lang-toggle .off { opacity: 0.4; }
 .lang-toggle .sep { opacity: 0.35; }
@@ -272,14 +274,15 @@ img { display: block; max-width: 100%; }
   border-radius: 999px;
   transition: transform 0.2s ease, background-color 0.25s ease;
 }
-.ig-link:hover { background: rgba(239, 46, 49, 0.10); }
+@media (hover: hover) {
+  .ig-link:hover { background: rgba(239, 46, 49, 0.10); }
+}
 .ig-link svg { width: 24px; height: 24px; color: var(--red); }
 
 /* =================== HERO =================== */
 .hero {
   position: relative;
-  height: 100vh;
-  height: 100svh;
+  height: 100dvh;
   width: 100%;
   overflow: hidden;
   background: var(--pink); /* Pale pink background */
@@ -361,7 +364,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* Tailwind utility mappings for custom layouts */
-.h-screen { height: 100vh; height: 100svh; }
+.h-screen { height: 100dvh; }
 .relative { position: relative; }
 .absolute { position: absolute; }
 .overflow-hidden { overflow: hidden; }
@@ -501,8 +504,10 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
   z-index: 2;
 }
-.flavor-card:hover .glare::after { transform: translateX(130%); }
-.about-card:hover .glare::after { transform: translateX(130%); }
+@media (hover: hover) {
+  .flavor-card:hover .glare::after { transform: translateX(130%); }
+  .about-card:hover .glare::after { transform: translateX(130%); }
+}
 
 /* ===== GAME modal — CSS infinite animations (not tracked by AnimatePresence,
    so the modal can exit instantly without waiting on them) ===== */

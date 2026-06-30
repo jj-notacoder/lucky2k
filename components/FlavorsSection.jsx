@@ -1,15 +1,16 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import FlavorCard from './FlavorCard';
+import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
 
 const IG = 'https://www.instagram.com/luckytwothousand/';
 
 const FLAVORS = [
-  { key: 'cinnamon', img: '/flavours/cinnamon.jpg', title: 'Cinnamon Sugar', sub: '+ Vanilla Custard', tapes: ['tl', 'br'] },
-  { key: 'chocolate', img: '/flavours/chocolate.jpg', title: 'Chocolate Hazelnut', tapes: ['tr', 'bl'] },
-  { key: 'orange', img: '/flavours/orange.jpg', title: 'Orange Cardamom', tapes: ['tl', 'br'] },
-  { key: 'strawberry', img: '/flavours/strawberry.jpg', title: 'Strawberries & Cream', tapes: ['tr', 'bl'] },
+  { key: 'cinnamon', img: '/flavours/cinnamon.webp', title: 'Cinnamon Sugar', sub: '+ Vanilla Custard', tapes: ['tl', 'br'] },
+  { key: 'chocolate', img: '/flavours/chocolate.webp', title: 'Chocolate Hazelnut', tapes: ['tr', 'bl'] },
+  { key: 'orange', img: '/flavours/orange.webp', title: 'Orange Cardamom', tapes: ['tl', 'br'] },
+  { key: 'strawberry', img: '/flavours/strawberry.webp', title: 'Strawberries & Cream', tapes: ['tr', 'bl'] },
 ];
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } };
@@ -28,6 +29,10 @@ const CLOVERS = [
 ];
 
 export default function FlavorsSection() {
+  const reduce = useReducedMotion();
+  const isMobile = useIsMobileViewport();
+  const visibleClovers = reduce ? [] : CLOVERS.slice(0, isMobile ? 8 : CLOVERS.length);
+
   return (
     <section id="flavors" className="relative z-20 w-full overflow-x-clip candy-stripes pb-24 md:pb-32">
       {/* CUSTOM IMAGE TRANSITION (Hero to Flavors) */}
@@ -35,21 +40,29 @@ export default function FlavorsSection() {
         <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#EF2E31]" />
         <div className="absolute inset-x-0 top-2 z-10 h-1 bg-[#EF2E31]" />
         <img
-          src="/donutfinal/top of flavours.png"
+          src="/donutfinal/top of flavours.webp"
           alt="Scalloped Transition"
+          width={1536}
+          height={1024}
+          loading="lazy"
+          decoding="async"
           className="block w-full h-auto -translate-y-[20%]"
         />
       </div>
 
       {/* dense, more-visible floating clovers */}
-      {CLOVERS.map((c, i) => (
+      {visibleClovers.map((c, i) => (
         <motion.img
           key={i}
-          src="/clover.png"
+          src="/clover.webp"
           alt=""
           aria-hidden="true"
+          width={557}
+          height={448}
+          loading="lazy"
+          decoding="async"
           className="pointer-events-none absolute z-0 select-none opacity-[0.32]"
-          style={{ top: c.top, bottom: c.bottom, left: c.left, right: c.right, width: c.s }}
+          style={{ top: c.top, bottom: c.bottom, left: c.left, right: c.right, width: c.s, willChange: 'transform' }}
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 6 + (i % 5), repeat: Infinity, ease: 'easeInOut', delay: (i % 7) * 0.4 }}
         />
@@ -62,6 +75,7 @@ export default function FlavorsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          style={{ willChange: 'transform, opacity' }}
           className="text-center"
         >
           <p className="font-['Clarendon'] text-xl lg:text-2xl font-bold tracking-widest text-[#EF2E31]">
@@ -79,7 +93,7 @@ export default function FlavorsSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.2 }}
-          className="mt-28 md:mt-36 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-24 w-full max-w-7xl mx-auto z-10"
+          className="mt-28 md:mt-36 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-24 w-full max-w-7xl mx-auto z-10 transform-gpu"
         >
           {FLAVORS.map(({ key, ...f }) => (
             <FlavorCard key={key} {...f} />
@@ -97,7 +111,7 @@ export default function FlavorsSection() {
           <div className="relative w-full max-w-4xl mx-auto mt-44 z-10">
             <FlavorCard
               wide
-              img="/flavours/lucky.jpg"
+              img="/flavours/lucky.webp"
               title="Lucky Flavor"
               sub="Changes every week"
               highIntensitySparks
@@ -112,6 +126,7 @@ export default function FlavorsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.5, delay: 0.1 }}
+          style={{ willChange: 'transform, opacity' }}
           className="mt-16 flex justify-center"
         >
           <a

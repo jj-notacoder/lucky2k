@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
 
 const COLORS = ['#FF69B4', '#ffffff', '#FF3333'];
 
@@ -12,9 +13,11 @@ const COLORS = ['#FF69B4', '#ffffff', '#FF3333'];
  */
 export default function Sparks({ intense = false, constant = false }) {
   const [isMounted, setIsMounted] = useState(false);
+  const reduce = useReducedMotion();
+  const isMobile = useIsMobileViewport();
   useEffect(() => setIsMounted(true), []);
 
-  const count = constant ? 20 : intense ? 18 : 7;
+  const count = reduce ? 0 : constant ? (isMobile ? 10 : 20) : intense ? (isMobile ? 10 : 18) : 7;
 
   // Stable random configs along the borders (Top, Right, Bottom, Left).
   const sparks = useMemo(
@@ -87,6 +90,7 @@ export default function Sparks({ intense = false, constant = false }) {
             boxShadow: `0 0 8px ${s.color}`,
             left: `${s.startX}%`,
             top: `${s.startY}%`,
+            willChange: 'transform, opacity',
           }}
           initial={{
             x: 0,

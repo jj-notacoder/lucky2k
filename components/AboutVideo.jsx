@@ -23,7 +23,7 @@ export default function AboutVideo() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             className="h-full w-full object-cover"
           />
 
@@ -37,16 +37,24 @@ export default function AboutVideo() {
 
       {/* base decorations: doughnut box (left) + dice (right) */}
       <img
-        src="/about/vidbase-left.png"
+        src="/about/vidbase-left.webp"
         alt=""
         aria-hidden="true"
+        width={310}
+        height={231}
+        loading="lazy"
+        decoding="async"
         className="pointer-events-none absolute -bottom-7 -left-6 z-20 w-28 select-none drop-shadow-[0_10px_18px_rgba(92,15,16,0.3)] md:w-32"
         draggable="false"
       />
       <img
-        src="/about/vidbase-right.png"
+        src="/about/vidbase-right.webp"
         alt=""
         aria-hidden="true"
+        width={235}
+        height={309}
+        loading="lazy"
+        decoding="async"
         className="pointer-events-none absolute -bottom-8 -right-5 z-20 w-24 select-none drop-shadow-[0_10px_18px_rgba(92,15,16,0.3)] md:w-28"
         draggable="false"
       />

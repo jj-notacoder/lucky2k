@@ -1,10 +1,18 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useMemo, useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
+
+function seededValue(index, salt) {
+  return Math.abs(Math.sin(index * 9301 + salt * 49297) * 233280) % 1;
+}
 
 export function TwilightFooter() {
   const sectionRef = useRef(null);
+  const reduce = useReducedMotion();
+  const isMobile = useIsMobileViewport();
+  const particleCount = reduce ? 0 : isMobile ? 15 : 40;
   
   // Parallax Physics: Tracks the section as it enters the viewport
   const { scrollYProgress } = useScroll({
@@ -13,7 +21,19 @@ export function TwilightFooter() {
   });
   
   // Moon starts hidden below its own bounds, then rests at its native CSS anchor.
-  const moonY = useTransform(scrollYProgress, [0, 1], ["100%", "0%"]);
+  const moonY = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["100%", "0%"]);
+  const stars = useMemo(
+    () =>
+      Array.from({ length: particleCount }).map((_, i) => ({
+        width: seededValue(i, 1) * 2 + 1,
+        height: seededValue(i, 2) * 2 + 1,
+        top: seededValue(i, 3) * 100,
+        left: seededValue(i, 4) * 100,
+        duration: seededValue(i, 5) * 3 + 2,
+        delay: seededValue(i, 6) * 3,
+      })),
+    [particleCount]
+  );
 
   return (
     <div className="relative w-full">
@@ -23,28 +43,28 @@ export function TwilightFooter() {
       <section 
         id="twilight-footer" 
         ref={sectionRef} 
-        className="relative w-full h-[100vh] overflow-hidden bg-[#FFC5D0] flex flex-col justify-between"
+        className="relative w-full h-[100dvh] overflow-hidden bg-[#FFC5D0] flex flex-col justify-between"
       >
         {/* 2. The Twilight Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black/90 pointer-events-none z-10" />
 
         {/* 3. The Starry Night (White Flecks) */}
-        {/* Render 40 static stars with pulsing animations */}
-        {[...Array(40)].map((_, i) => (
+        {stars.map((star, i) => (
           <motion.div
             key={`star-${i}`}
             className="absolute bg-white rounded-full pointer-events-none z-20"
             style={{
-              width: Math.random() * 2 + 1 + 'px',
-              height: Math.random() * 2 + 1 + 'px',
-              top: Math.random() * 100 + '%',
-              left: Math.random() * 100 + '%',
+              width: `${star.width}px`,
+              height: `${star.height}px`,
+              top: `${star.top}%`,
+              left: `${star.left}%`,
+              willChange: 'transform, opacity',
             }}
             animate={{ opacity: [0.1, 0.8, 0.1], scale: [1, 1.3, 1] }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: star.duration,
               repeat: Infinity,
-              delay: Math.random() * 3,
+              delay: star.delay,
             }}
           />
         ))}
@@ -56,8 +76,12 @@ export function TwilightFooter() {
             <div className="absolute inset-0 bg-[#EF2E31]/40 blur-[80px] md:blur-[120px] rounded-full pointer-events-none" />
             {/* The Logo */}
             <img
-              src="/donutfinal/neonlogo-footer.png"
+              src="/donutfinal/neonlogo-footer.webp"
               alt="Lucky 2000 Neon Logo"
+              width={358}
+              height={253}
+              loading="lazy"
+              decoding="async"
               className="relative z-10 w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(239,46,49,0.8)]"
             />
           </div>
@@ -66,10 +90,14 @@ export function TwilightFooter() {
         {/* 2. BOTTOM ZONE: The Parallax Moon */}
         <div className="relative z-30 w-full flex justify-center items-end mt-auto">
           <motion.img
-            src="/donutfinal/moon.png"
+            src="/donutfinal/moon.webp"
             alt="Rising Moon"
-            style={{ y: moonY }}
-            className="w-[85%] md:w-[50%] max-w-2xl max-h-[35vh] object-contain object-bottom origin-bottom pointer-events-none"
+            width={1419}
+            height={464}
+            loading="lazy"
+            decoding="async"
+            style={{ y: moonY, willChange: 'transform' }}
+            className="w-[85%] md:w-[50%] max-w-2xl max-h-[35vh] object-contain object-bottom origin-bottom pointer-events-none transform-gpu"
           />
         </div>
       </section>

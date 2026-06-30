@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import AboutCard from './AboutCard';
 import AboutVideo from './AboutVideo';
+import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.16 } } };
 
@@ -31,32 +32,32 @@ function Sparkle({ size }) {
 const CARDS = [
   {
     key: 'counter',
-    img: '/about/card1.jpg',
+    img: '/about/card1.webp',
     centerText: <span>Just doughnuts, <br /> a counter, and a little luck</span>,
     badge: null,
     textClass: '-translate-y-4 md:-translate-y-6',
   },
   {
     key: 'sunset',
-    img: '/about/card2.jpg',
+    img: '/about/card2.webp',
     centerText: <span>Open from sunset, <br /> made for after-dark cravings</span>,
-    badge: '/about/icon-time.png',
+    badge: '/about/icon-time.webp',
     badgeAlt: 'Open after sunset, 7pm',
     badgeClass: '-bottom-6 -left-4 w-28 -rotate-6 md:w-32',
   },
   {
     key: 'mystery',
-    img: '/about/card3.jpg',
+    img: '/about/card3.webp',
     centerText: <span>Weekly flavor <br /> announced on <br /> Instagram</span>,
-    badge: '/about/icon-star.png',
+    badge: '/about/icon-star.webp',
     badgeAlt: 'Weekly lucky flavor',
     badgeClass: 'top-1/2 -left-6 w-24 -translate-y-1/2 -rotate-12 md:w-28',
   },
   {
     key: 'mina',
-    img: '/about/card4.jpg',
+    img: '/about/card4.webp',
     centerText: <span>Souq Al Mina, <br /> Mina Zayed, down <br /> by the sea</span>,
-    badge: '/about/icon-location.png',
+    badge: '/about/icon-location.webp',
     badgeAlt: 'See you in the Mina',
     badgeClass: '-bottom-6 -left-4 w-28 -rotate-6 md:w-32',
   },
@@ -64,17 +65,25 @@ const CARDS = [
 
 export default function AboutSection() {
   const [clientDice, setClientDice] = useState([]);
+  const reduce = useReducedMotion();
+  const isMobile = useIsMobileViewport();
 
   useEffect(() => {
     // Generate 12 random dice positions client-side to prevent hydration mismatches
-    const diceArray = Array.from({ length: 12 }).map((_, i) => ({
+    if (reduce) {
+      setClientDice([]);
+      return;
+    }
+
+    const diceCount = isMobile ? 6 : 12;
+    const diceArray = Array.from({ length: diceCount }).map((_, i) => ({
       top: (Math.random() * 80 + 10) + '%',
       left: (Math.random() * 90 + 5) + '%',
       size: Math.floor(Math.random() * 40) + 70, // 70px to 110px
       rotate: Math.floor(Math.random() * 30) - 15, // -15deg to 15deg
     }));
     setClientDice(diceArray);
-  }, []);
+  }, [isMobile, reduce]);
 
   return (
     <section id="about" className="relative w-full overflow-hidden candy-stripes pb-32 md:pb-40">
@@ -83,8 +92,12 @@ export default function AboutSection() {
         <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#EF2E31]" />
         <div className="absolute inset-x-0 top-2 z-10 h-1 bg-[#EF2E31]" />
         <img
-          src="/donutfinal/top of flavours.png"
+          src="/donutfinal/top of flavours.webp"
           alt="Scalloped Transition"
+          width={1536}
+          height={1024}
+          loading="lazy"
+          decoding="async"
           className="block w-full h-auto -translate-y-[20%]"
         />
       </div>
@@ -93,15 +106,20 @@ export default function AboutSection() {
       {clientDice.map((d, i) => (
         <motion.img
           key={i}
-          src="/about/fuzzy-die.png"
+          src="/about/fuzzy-die.webp"
           alt=""
           aria-hidden="true"
+          width={577}
+          height={433}
+          loading="lazy"
+          decoding="async"
           className="pointer-events-none absolute z-0 select-none opacity-30 md:opacity-40"
           style={{
             top: d.top,
             left: d.left,
             width: d.size,
             rotate: `${d.rotate}deg`,
+            willChange: 'transform',
           }}
           animate={{ y: [0, -20, 0] }}
           transition={{
@@ -133,9 +151,10 @@ export default function AboutSection() {
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col items-center text-center w-full"
+          viewport={{ once: false, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          style={{ willChange: 'transform, opacity' }}
+          className="flex flex-col items-center text-center w-full"
           >
             <h2 className="neon-flavors ff-display mt-3 font-black italic uppercase leading-[0.9] text-[clamp(54px,9vw,108px)]">
               ABOUT US
@@ -162,6 +181,7 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            style={{ willChange: 'transform, opacity' }}
           >
             <AboutVideo />
           </motion.div>

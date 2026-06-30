@@ -67,8 +67,12 @@ export default function LocationSection() {
       {/* CUSTOM IMAGE TRANSITION (Twilight to Location) */}
       <div className="relative z-50 h-[92px] w-full overflow-hidden bg-[#FFC5D0] pointer-events-none md:h-[128px]">
         <img
-          src="/donutfinal/endofmoon.png"
+          src="/donutfinal/endofmoon.webp"
           alt="Section Separator"
+          width={1536}
+          height={1024}
+          loading="lazy"
+          decoding="async"
           className="absolute inset-x-0 top-0 h-auto w-full -translate-y-[22.55%]"
         />
         <div className="absolute inset-x-0 top-0 z-[60] h-1 bg-white shadow-[0_0_12px_rgba(255,255,255,0.95)]" />
@@ -118,7 +122,7 @@ export default function LocationSection() {
       <div className="border-t-4 border-[#EF2E31]" />
       <div className="border-t-4 border-[#EF2E31]" />
 
-      <div className="flex w-full flex-col items-center justify-center bg-[url('/donutfinal/footer.jpeg')] bg-cover bg-center bg-no-repeat px-5 py-16 text-center">
+      <div className="flex w-full flex-col items-center justify-center bg-[url('/donutfinal/footer.webp')] bg-cover bg-center bg-no-repeat px-5 py-16 text-center">
         <p
           className="font-['Clarendon'] text-[clamp(34px,7vw,82px)] font-black italic leading-none text-white"
           style={{ textShadow: '0 3px 0 #EF2E31, 0 0 18px rgba(239,46,49,0.75)' }}

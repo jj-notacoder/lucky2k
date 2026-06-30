@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Sparks from './Sparks';
+import { useCanHover } from '@/lib/useResponsivePerformance';
 
 const item = {
   hidden: { opacity: 0, y: 42 },
@@ -21,6 +22,7 @@ export default function FlavorCard({
   highIntensitySparks = false,
   tapes = ['tl', 'br'],
 }) {
+  const canHover = useCanHover();
   const [hovered, setHovered] = useState(false);
   const [sparkKey, setSparkKey] = useState(0);
 
@@ -30,16 +32,21 @@ export default function FlavorCard({
   // Ambient diffused glow (no more flat hard shadow). Lucky = radioactive.
   const cardShadow = wide
     ? 'shadow-[0_0_80px_rgba(255,105,180,0.6),_0_20px_60px_rgba(239,46,49,0.8)]'
-    : 'shadow-[0_20px_50px_-12px_rgba(239,46,49,0.6)] hover:shadow-[0_30px_60px_-12px_rgba(239,46,49,0.8)] transition-shadow duration-500';
+    : `shadow-[0_20px_50px_-12px_rgba(239,46,49,0.6)] ${canHover ? 'hover:shadow-[0_30px_60px_-12px_rgba(239,46,49,0.8)]' : ''} transition-shadow duration-500`;
 
   return (
     <motion.div
       variants={item}
       className="flavor-card relative"
-      onHoverStart={() => { setHovered(true); setSparkKey((k) => k + 1); }}
-      onHoverEnd={() => setHovered(false)}
-      whileHover={{ y: -6, rotate: wide ? 0 : -1 }}
+      onHoverStart={() => {
+        if (!canHover) return;
+        setHovered(true);
+        setSparkKey((k) => k + 1);
+      }}
+      onHoverEnd={() => canHover && setHovered(false)}
+      whileHover={canHover ? { y: -6, rotate: wide ? 0 : -1 } : undefined}
       transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+      style={{ willChange: 'transform, opacity' }}
     >
       {/* flavor name — dynamic top-left/bottom-left broken-grid overlays */}
       {wide ? (
@@ -100,7 +107,16 @@ export default function FlavorCard({
           wide ? 'aspect-[583/231]' : 'aspect-[169/217]'
         }`}
       >
-        <img src={img} alt={title || 'Lucky flavour'} className="h-full w-full object-cover" draggable="false" />
+        <img
+          src={img}
+          alt={title || 'Lucky flavour'}
+          width={wide ? 583 : 169}
+          height={wide ? 231 : 217}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+          draggable="false"
+        />
       </div>
 
       {/* Lucky card: constant sparks popping off the card (above the image) */}
@@ -116,7 +132,7 @@ export default function FlavorCard({
       ))}
 
       {/* standard cards: spark burst on hover (above the card) */}
-      {!wide && hovered && (
+      {!wide && canHover && hovered && (
         <div className="absolute inset-0 z-30">
           <Sparks key={sparkKey} intense={highIntensitySparks} />
         </div>

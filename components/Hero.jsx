@@ -48,7 +48,7 @@ export default function Hero() {
     restDelta: 0.001
   });
   // Drops the sun 300px down by the time the user scrolls 600px
-  const sunScrollY = useTransform(scrollY, [0, 600], [0, 300]);
+  const sunScrollY = useTransform(scrollY, [0, 600], reduce ? [0, 0] : [0, 300]);
 
   // State Management
   const [isNavVisible, setIsNavVisible] = useState(true);
@@ -87,7 +87,7 @@ export default function Hero() {
 
 
   return (
-    <section id="hero" ref={heroRef} className="relative z-10 w-full h-screen overflow-hidden bg-[#FFC5D0]">
+    <section id="hero" ref={heroRef} className="relative z-10 w-full h-[100dvh] overflow-hidden bg-[#FFC5D0]">
       
       {/* INDEPENDENT SCROLL PROGRESS BAR */}
       <motion.div 
@@ -95,6 +95,7 @@ export default function Hero() {
         style={{
           scaleX,
           backgroundColor: isOverDarkSection ? '#FFFFFF' : '#EF2E31',
+          willChange: 'transform, background-color',
         }}
       />
 
@@ -113,17 +114,24 @@ export default function Hero() {
         className={`fixed top-0 left-0 w-full h-14 md:h-16 z-[9999] grid grid-cols-3 items-center px-6 md:px-10 backdrop-blur-md transition-colors duration-300 ${isOverDarkSection ? 'bg-black/20' : 'bg-[#FFC5D0]/90'}`}
         style={{
           backgroundColor: isOverDarkSection ? 'rgba(0,0,0,0.2)' : 'rgba(255,197,208,0.9)',
+          willChange: 'transform, opacity',
         }}
       >
         
         {/* LEFT COLUMN: Contextual Logo */}
         <div className="flex justify-start items-center z-20">
           <motion.img
-            src="/donutfinal/logo.png"
+            src="/donutfinal/logo.webp"
             alt="Lucky 2000"
+            width={561}
+            height={445}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             initial={{ opacity: 0 }}
             animate={{ opacity: isPastHero ? 1 : 0 }}
+            style={{ willChange: 'opacity' }}
             className={`h-10 w-auto object-contain cursor-pointer ${isPastHero ? 'pointer-events-auto' : 'pointer-events-none'}`}
           />
         </div>
@@ -180,21 +188,33 @@ export default function Hero() {
          
          {/* Main Logo */}
          <motion.img 
-           src="/donutfinal/logo.png" 
+           src="/donutfinal/logo.webp" 
            alt="Lucky 2000 Logo" 
+           width={561}
+           height={445}
+           loading="eager"
+           decoding="async"
+           fetchPriority="high"
            className="w-[240px] md:w-[320px] lg:w-[380px] object-contain pointer-events-auto transition-transform duration-300" 
            initial={{ scale: 0.8, opacity: 0, y: 40 }}
            animate={{ scale: 1, opacity: 1, y: 0 }}
            transition={{ type: "spring", bounce: 0.5, duration: 0.8, delay: 0.2 }}
+           style={{ willChange: 'transform, opacity' }}
          />
           
          {/* Animated Subtitle (Dynamic EN/AR) */}
          <motion.img 
-           src={isArabic ? "/donutfinal/donutsfrom sunset - arabic.png" : "/donutfinal/donutsfrom_sunset.png"} 
+           src={isArabic ? "/donutfinal/donutsfrom sunset - arabic.webp" : "/donutfinal/donutsfrom_sunset.webp"} 
            alt="Doughnuts from sunset" 
+           width={isArabic ? 1536 : 624}
+           height={isArabic ? 1024 : 97}
+           loading="eager"
+           decoding="async"
+           fetchPriority="high"
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+           style={{ willChange: 'transform, opacity' }}
            className={`object-contain pointer-events-auto transition-all duration-300 ${
              isArabic 
                ? "h-[48px] md:h-[64px] lg:h-[72px] mt-2 md:mt-4" 
@@ -209,16 +229,22 @@ export default function Hero() {
         
         {/* 2. Animated Container: ONLY handles the scroll physics (no Tailwind transforms) */}
         <motion.div 
-          style={{ y: sunScrollY }} 
-          className="w-[1200px] max-w-[100vw] h-[22vh] md:h-[28vh] flex justify-center"
+          style={{ y: sunScrollY, willChange: 'transform' }} 
+          className="w-[1200px] max-w-[100vw] h-[22vh] md:h-[28vh] flex justify-center transform-gpu"
         >
           <motion.img 
-            src="/donutfinal/sun.png" 
+            src="/donutfinal/sun.webp" 
             alt="Setting Sun" 
+            width={2384}
+            height={947}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             className="w-full h-full object-cover object-top"
             initial={{ y: 200, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 60, damping: 20, delay: 0.3 }}
+            style={{ willChange: 'transform, opacity' }}
           />
         </motion.div>
         

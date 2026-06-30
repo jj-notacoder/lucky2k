@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 /**
  * FluidCursor — Awwwards-level DOM-based chase ribbon cursor.
@@ -9,6 +9,7 @@ import React, { useEffect, useRef } from 'react';
  *  • 60fps requestAnimationFrame loop running directly on DOM refs (no React state updates).
  */
 export default function FluidCursor() {
+  const [enabled, setEnabled] = useState(false);
   const cursorRef = useRef(null);
   const mouseRef = useRef({ x: -100, y: -100 });
   const ptsRef = useRef([]);
@@ -17,8 +18,18 @@ export default function FluidCursor() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (window.matchMedia('(pointer: coarse)').matches) return; // skip touch devices
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // skip reduced motion
+
+    const isTouchDevice =
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    setEnabled(!isTouchDevice && !prefersReducedMotion);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
 
     const container = cursorRef.current;
     if (!container) return;
@@ -99,7 +110,9 @@ export default function FluidCursor() {
         container.innerHTML = '';
       }
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return <div ref={cursorRef} className="fixed inset-0 pointer-events-none z-[9999]" />;
 }
