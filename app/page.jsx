@@ -2,6 +2,8 @@ import Hero from '@/components/Hero';
 import FlavorsSection from '@/components/FlavorsSection';
 import AboutSection from '@/components/AboutSection';
 import GameSection from '@/components/GameSection';
+import TwilightFooter from '@/components/TwilightFooter';
+import LocationSection from '@/components/LocationSection';
 
 export default function Page() {
   return (
@@ -11,6 +13,8 @@ export default function Page() {
         <FlavorsSection />
         <AboutSection />
         <GameSection />
+        <TwilightFooter />
+        <LocationSection />
       </main>
     </>
   );

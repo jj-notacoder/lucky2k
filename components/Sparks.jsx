@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const COLORS = ['#FF69B4', '#ffffff', '#FF3333'];
@@ -11,6 +11,9 @@ const COLORS = ['#FF69B4', '#ffffff', '#FF3333'];
  *  • constant: infinite loop, sparks continuously popping off (Lucky card).
  */
 export default function Sparks({ intense = false, constant = false }) {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
+
   const count = constant ? 20 : intense ? 18 : 7;
 
   // Stable random configs along the borders (Top, Right, Bottom, Left).
@@ -68,6 +71,8 @@ export default function Sparks({ intense = false, constant = false }) {
       }),
     [count, constant, intense]
   );
+
+  if (!isMounted) return null;
 
   return (
     <div className="pointer-events-none absolute inset-0 z-0">

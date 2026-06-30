@@ -77,8 +77,17 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section id="about" className="relative w-full overflow-hidden candy-stripes pt-28 pb-32 md:pt-36 md:pb-40">
-      <div className="scallop-top" />
+    <section id="about" className="relative w-full overflow-hidden candy-stripes pb-32 md:pb-40">
+      {/* CUSTOM IMAGE TRANSITION (Flavors to About) */}
+      <div className="relative z-30 h-[116px] w-full overflow-hidden pointer-events-none md:h-[168px]">
+        <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#EF2E31]" />
+        <div className="absolute inset-x-0 top-2 z-10 h-1 bg-[#EF2E31]" />
+        <img
+          src="/donutfinal/top of flavours.png"
+          alt="Scalloped Transition"
+          className="block w-full h-auto -translate-y-[20%]"
+        />
+      </div>
 
       {/* floating fuzzy dice */}
       {clientDice.map((d, i) => (
@@ -117,14 +126,14 @@ export default function AboutSection() {
         </motion.div>
       ))}
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-5 pt-16 md:px-8 md:pt-20">
         {/* ===== center content: text (left) + video (right) ===== */}
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
           {/* LEFT — text column */}
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
+            viewport={{ once: false, amount: 0.4 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center text-center w-full"
           >
@@ -151,7 +160,7 @@ export default function AboutSection() {
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <AboutVideo />
@@ -163,11 +172,11 @@ export default function AboutSection() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
           className="mt-32 grid grid-cols-1 gap-x-8 gap-y-16 md:mt-40 md:grid-cols-2 md:gap-y-20"
         >
-          {CARDS.map((c) => (
-            <AboutCard key={c.key} {...c} />
+          {CARDS.map(({ key, ...c }) => (
+            <AboutCard key={key} {...c} />
           ))}
         </motion.div>
       </div>

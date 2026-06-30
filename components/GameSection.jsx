@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const IG = 'https://instagram.com/luckytwothousand';
 
@@ -24,27 +24,6 @@ const SLOTS = [
   { top: '80%', left: '78%', s: 125, r: -5, d: 1.5 },
 ];
 
-/* Floating sparks scattered around the modal donut. */
-const MODAL_SPARKS = [
-  { top: '12%', left: '26%', s: 20, d: 0 },
-  { top: '8%', left: '64%', s: 15, d: 0.4 },
-  { top: '30%', left: '16%', s: 17, d: 0.8 },
-  { top: '24%', left: '80%', s: 22, d: 0.3 },
-  { top: '46%', left: '72%', s: 13, d: 0.6 },
-  { top: '42%', left: '24%', s: 16, d: 1.0 },
-];
-
-function Sparkle({ size = 16 }) {
-  return (
-    <svg viewBox="0 0 24 24" width={size} height={size} fill="none" aria-hidden="true">
-      <path
-        d="M12 0c.6 5.4 2.6 7.4 8 8-5.4.6-7.4 2.6-8 8-.6-5.4-2.6-7.4-8-8 5.4-.6 7.4-2.6 8-8z"
-        fill="#EF2E31"
-      />
-    </svg>
-  );
-}
-
 const boxContainer = { hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } };
 const boxItem = {
   hidden: { opacity: 0, y: 48, scale: 0.85 },
@@ -53,34 +32,32 @@ const boxItem = {
 
 export default function GameSection() {
   const [selectedBox, setSelectedBox] = useState(null);
-  const [phase, setPhase] = useState(0); // 1 close-up · 2 title · 3 pan-out+float · 4 message
 
   const isLucky = selectedBox === 5;
   const data = selectedBox ? REVEAL[selectedBox] : null;
 
-  /* cinematic phase timeline + Escape + scroll lock */
+  /* Escape closes the modal; the card itself links out to Instagram. */
   useEffect(() => {
-    if (!selectedBox) {
-      setPhase(0);
-      return;
-    }
-    setPhase(1);
-    const timers = [
-      setTimeout(() => setPhase(2), 1000), // title reveal
-      setTimeout(() => setPhase(3), 2500), // pan-out + float
-      setTimeout(() => setPhase(4), 3000), // message reveal
-    ];
+    if (!selectedBox) return undefined;
     const onKey = (e) => e.key === 'Escape' && setSelectedBox(null);
     window.addEventListener('keydown', onKey);
     return () => {
-      timers.forEach(clearTimeout);
       window.removeEventListener('keydown', onKey);
     };
   }, [selectedBox]);
 
   return (
-    <section id="game" className="relative w-full min-h-screen overflow-hidden candy-stripes py-24 md:py-28">
-      <div className="scallop-top" />
+    <section id="game" className="relative w-full overflow-hidden candy-stripes pb-12 md:pb-16">
+      {/* CUSTOM IMAGE TRANSITION (About to Get Lucky) */}
+      <div className="relative z-30 h-[116px] w-full overflow-hidden pointer-events-none md:h-[168px]">
+        <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#EF2E31]" />
+        <div className="absolute inset-x-0 top-2 z-10 h-1 bg-[#EF2E31]" />
+        <img
+          src="/donutfinal/top of flavours.png"
+          alt="Scalloped Transition"
+          className="block w-full h-auto -translate-y-[20%]"
+        />
+      </div>
 
       {/* background slot machines (z-0) */}
       {SLOTS.map((m, i) => (
@@ -96,45 +73,45 @@ export default function GameSection() {
         />
       ))}
 
-      <div className="relative z-10 mx-auto max-w-6xl px-5">
-        {/* header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center"
-        >
-          <h2 className="neon-flavors font-['Clarendon'] font-black uppercase tracking-wide text-[clamp(48px,9vw,104px)] leading-[0.9]">
-            Get Lucky
+      <div className="relative z-10 mx-auto max-w-6xl px-5 pt-12 md:pt-16">
+        {/* STANDARDIZED HEADER: GET LUCKY */}
+        <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-8 md:mb-12">
+          <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide">
+            GET LUCKY
           </h2>
-          <p className="mt-4 font-['Lora'] text-lg font-bold text-[#EF2E31] md:text-2xl">
-            Take a chance on our weekly mystery drop.
+
+          {/* The Glowing Underline */}
+          <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
+
+          <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-lg md:text-xl tracking-[0.2em] md:tracking-[0.25em]">
+            TAKE A CHANCE ON OUR WEEKLY MYSTERY DROP
           </p>
-        </motion.div>
+        </div>
 
         {/* game board */}
-        <div className="relative mt-14 md:mt-20">
+        <div className="relative mt-6 md:mt-8">
           <div
             className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[120%] w-[115%] -translate-x-1/2 -translate-y-1/2 blur-3xl"
             style={{ background: 'radial-gradient(closest-side, rgba(255,255,255,0.75), rgba(255,180,200,0.35) 55%, transparent 75%)' }}
           />
 
-          <motion.img
-            src="/donutfinal/gameqmark.png"
-            alt="Mystery"
-            className="relative z-20 mx-auto mb-8 w-24 select-none drop-shadow-[0_8px_24px_rgba(239,46,49,0.5)] md:w-32"
-            draggable="false"
-            animate={{ scale: [1, 1.05, 1], y: [0, -6, 0] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-          />
+          <div className="my-4 md:my-6 flex justify-center z-20 relative">
+            <motion.img
+              src="/donutfinal/gameqmark.png"
+              alt="Mystery"
+              className="w-20 md:w-24 select-none drop-shadow-[0_8px_24px_rgba(239,46,49,0.5)]"
+              draggable="false"
+              animate={{ scale: [1, 1.05, 1], y: [0, -6, 0] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
 
           {/* 5 boxes */}
           <motion.div
             variants={boxContainer}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.4 }}
+            viewport={{ once: false, amount: 0.4 }}
             className="relative z-20 mx-auto grid max-w-5xl grid-cols-5 gap-2 sm:gap-4"
           >
             {[1, 2, 3, 4, 5].map((n) => (
@@ -167,117 +144,71 @@ export default function GameSection() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
+          viewport={{ once: false, amount: 0.6 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mx-auto mt-16 max-w-xl rounded-2xl border-2 border-[#EF2E31] bg-white/80 px-8 py-5 text-center shadow-[0_0_20px_rgba(239,46,49,0.5)] backdrop-blur-sm md:mt-20"
+          className="mx-auto mt-8 md:mt-10 max-w-xl rounded-2xl border-2 border-[#EF2E31] bg-white/80 px-8 py-5 text-center shadow-[0_0_20px_rgba(239,46,49,0.5)] backdrop-blur-sm"
         >
           <p className="font-['Clarendon'] text-xl font-black uppercase tracking-wide text-[#EF2E31] md:text-2xl">
             4 Regulars. 1 Mystery Drop.
           </p>
         </motion.div>
-
-        {/* back to top */}
-        <div className="mt-14 flex justify-center">
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="rounded-full border-2 border-[#EF2E31] bg-white/70 px-8 py-3 font-['Clarendon'] text-base font-bold text-[#EF2E31] shadow-[0_10px_30px_-8px_rgba(239,46,49,0.6)] transition-transform hover:-translate-y-1 md:text-lg"
-          >
-            Back to Top ↑
-          </button>
-        </div>
       </div>
 
-      {/* ---- cinematic modal (conditional render → instant, reliable unmount) ---- */}
-      {selectedBox && data && (
+      {/* ---- cinematic modal (clickable card, responsive content stack) ---- */}
+      <AnimatePresence>
+        {selectedBox && data && (
           <motion.div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md"
+            key="game-modal"
+            className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setSelectedBox(null)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.25 }}
-            onClick={() => setSelectedBox(null)}
+            exit={{ opacity: 0 }}
             role="dialog"
             aria-modal="true"
           >
-            <motion.div
+            <motion.a
+              href={IG}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.85, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex aspect-[16/9] w-full max-w-3xl flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#FFC5D0] p-6 shadow-2xl md:p-8"
+              aria-label={`Open ${data.name} on Instagram`}
+              className="relative w-full max-w-2xl bg-[#FFC5D0] rounded-3xl shadow-[0_0_40px_rgba(239,46,49,0.5)] border-4 border-[#EF2E31] p-6 md:p-8 flex flex-col items-center justify-center gap-4 md:gap-6 overflow-hidden cursor-pointer group"
+              initial={{ scale: 1.1, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             >
-              {/* soft inner glow */}
               <div
                 className="pointer-events-none absolute inset-0 z-0"
                 style={{ background: 'radial-gradient(circle at 50% 42%, rgba(255,255,255,0.6), transparent 70%)' }}
               />
 
-              {/* floating sparks (appear with the pan-out) */}
-              {phase >= 3 &&
-                MODAL_SPARKS.map((sp, i) => (
-                  <div
-                    key={i}
-                    className="game-spark-pulse pointer-events-none absolute z-20"
-                    style={{ top: sp.top, left: sp.left, animationDelay: `${sp.d}s` }}
-                  >
-                    <Sparkle size={sp.s} />
-                  </div>
-                ))}
+              <motion.img
+                src={data.img}
+                alt="Flavor"
+                className="relative z-10 w-full h-auto max-h-[40vh] md:max-h-[50vh] object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-500"
+                draggable="false"
+              />
 
-              {/* donut — close-up → pan-out (Framer one-shot) → gentle float (CSS) */}
-              <div className={`relative z-10 ${phase >= 3 ? 'game-float' : ''}`}>
-                <motion.img
-                  key={selectedBox}
-                  src={data.img}
-                  alt={data.name}
-                  className="w-52 select-none md:w-64"
-                  draggable="false"
-                  initial={{ scale: 2, y: 0, opacity: 0 }}
-                  animate={phase >= 3 ? { scale: 1, y: -40, opacity: 1 } : { scale: 2, y: 0, opacity: 1 }}
-                  transition={{ duration: phase >= 3 ? 0.9 : 0.5, ease: [0.22, 1, 0.36, 1] }}
-                />
-              </div>
-
-              {/* title (Clarendon, neon) */}
-              <motion.h3
-                className="relative z-30 mt-3 px-4 text-center font-['Clarendon'] font-bold leading-tight text-white drop-shadow-[0_0_20px_#EF2E31,0_0_40px_#EF2E31] text-2xl md:text-4xl lg:text-5xl"
-                initial={{ opacity: 0, y: 12 }}
-                animate={phase >= 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-              >
+              <h2 className="relative z-10 font-['Clarendon'] text-3xl md:text-5xl text-center text-white drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] font-bold leading-tight mt-2">
                 {data.name}
-              </motion.h3>
+              </h2>
 
-              {/* message + IG CTA (Lora) */}
-              <motion.div
-                className="relative z-30 mt-3 flex flex-col items-center px-4"
-                initial={{ opacity: 0, y: 12 }}
-                animate={phase >= 4 ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-              >
-                <p className="text-center font-['Lora'] text-base font-bold text-[#EF2E31] md:text-2xl">
-                  {isLucky ? (
-                    <>
-                      You got lucky! <br /> Check this week&rsquo;s flavor on Instagram.
-                    </>
-                  ) : (
-                    <>
-                      No luck yet :( <br /> The weekly drop is hiding on Instagram.
-                    </>
-                  )}
+              <div className="relative z-10 text-center">
+                <p className="font-['Lora'] text-lg md:text-xl text-[#EF2E31] font-bold">
+                  {isLucky
+                    ? "You got lucky! Check this week's flavor on Instagram."
+                    : 'No luck yet. The weekly drop is hiding on Instagram.'}
                 </p>
-                <a
-                  href={IG}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative z-40 mt-2 font-['Lora'] text-lg text-[#EF2E31] underline transition-colors hover:text-white md:text-xl"
-                >
-                  @luckytwothousand
-                </a>
-              </motion.div>
-            </motion.div>
+                <p className="font-['Lora'] text-base md:text-lg text-[#EF2E31] underline mt-1">
+                  Tap to view on @luckytwothousand
+                </p>
+              </div>
+            </motion.a>
           </motion.div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 }

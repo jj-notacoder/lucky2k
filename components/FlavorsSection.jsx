@@ -29,8 +29,17 @@ const CLOVERS = [
 
 export default function FlavorsSection() {
   return (
-    <section id="flavors" className="relative w-full overflow-hidden candy-stripes py-24 md:py-32">
-      <div className="scallop-top" />
+    <section id="flavors" className="relative z-20 w-full overflow-x-clip candy-stripes pb-24 md:pb-32">
+      {/* CUSTOM IMAGE TRANSITION (Hero to Flavors) */}
+      <div className="relative z-30 h-[116px] w-full overflow-hidden pointer-events-none md:h-[168px]">
+        <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#EF2E31]" />
+        <div className="absolute inset-x-0 top-2 z-10 h-1 bg-[#EF2E31]" />
+        <img
+          src="/donutfinal/top of flavours.png"
+          alt="Scalloped Transition"
+          className="block w-full h-auto -translate-y-[20%]"
+        />
+      </div>
 
       {/* dense, more-visible floating clovers */}
       {CLOVERS.map((c, i) => (
@@ -46,12 +55,12 @@ export default function FlavorsSection() {
         />
       ))}
 
-      <div className="relative z-10 mx-auto max-w-6xl px-5">
+      <div className="relative z-10 mx-auto max-w-6xl px-5 pt-16 md:pt-20">
         {/* header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center"
         >
@@ -69,11 +78,11 @@ export default function FlavorsSection() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
           className="mt-28 md:mt-36 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-24 w-full max-w-7xl mx-auto z-10"
         >
-          {FLAVORS.map((f) => (
-            <FlavorCard key={f.key} {...f} />
+          {FLAVORS.map(({ key, ...f }) => (
+            <FlavorCard key={key} {...f} />
           ))}
         </motion.div>
 
@@ -82,7 +91,7 @@ export default function FlavorsSection() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
           className="flex justify-center"
         >
           <div className="relative w-full max-w-4xl mx-auto mt-44 z-10">
@@ -101,7 +110,7 @@ export default function FlavorsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mt-16 flex justify-center"
         >

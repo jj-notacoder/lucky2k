@@ -16,11 +16,20 @@
 .-translate-x-1\/2.-translate-y-1\/2 {
   transform: translate(-50%, -50%) !important;
 }
+/* Brand font classes. var(--font-ar) (loaded Arabic font) is appended as a
+   fallback so Arabic glyphs render in the brand Arabic face — never a generic
+   system font — while Latin glyphs keep Impact/Clarendon/Lora. */
 .font-\[\'Clarendon\'\] {
-  font-family: 'Clarendon', var(--font-display), Georgia, serif !important;
+  font-family: 'Clarendon', var(--font-display), Georgia, var(--font-ar), serif !important;
 }
 .font-clarendon {
-  font-family: 'Clarendon', var(--font-display), Georgia, serif !important;
+  font-family: 'Clarendon', var(--font-display), Georgia, var(--font-ar), serif !important;
+}
+.font-\[\'Impact\'\] {
+  font-family: 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', var(--font-ar), sans-serif !important;
+}
+.font-\[\'Lora\'\] {
+  font-family: 'Lora', var(--font-body), var(--font-ar), Georgia, serif !important;
 }
 
 /* Tailwind utility mappings for absolute inset layout */
@@ -148,10 +157,10 @@
   --body: var(--font-body);
 }
 
-/* Strict Enforcement of Arabic Typography when dir="rtl" */
-html[dir="rtl"], html[dir="rtl"] * {
-  font-family: var(--font-arabic) !important;
-}
+/* RTL keeps the brand Latin display fonts intact. We intentionally do NOT
+   force an Arabic font on every element here — each element's font class
+   (Impact / Clarendon / Lora) is retained, and Arabic glyphs fall back to the
+   loaded Arabic face via var(--font-ar) inside those stacks. */
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -471,19 +480,6 @@ img { display: block; max-width: 100%; }
     #ffffff 40px,
     #ffffff 43px
   );
-}
-
-/* White scalloped top edge — semicircles hanging down into the pink */
-.scallop-top {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 40px;
-  z-index: 6;
-  background: radial-gradient(circle at 30px 0, #fff 29px, transparent 30px);
-  background-size: 60px 40px;
-  background-repeat: repeat-x;
 }
 
 /* Neon "THE FLAVORS" header */

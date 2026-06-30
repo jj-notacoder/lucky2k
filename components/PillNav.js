@@ -9,8 +9,9 @@ export default function PillNav({ items, baseColor = '#EF2E31', pillTextColor = 
 
   return (
     <div 
-      className="pill-nav"
+      className="pill-nav transition-colors duration-300"
       onMouseLeave={() => setHoveredIndex(null)}
+      aria-label="Primary"
     >
       <ul className="pill-list">
         {items.map((item, idx) => {
@@ -20,7 +21,7 @@ export default function PillNav({ items, baseColor = '#EF2E31', pillTextColor = 
               <a
                 href={item.href}
                 onMouseEnter={() => setHoveredIndex(idx)}
-                className="pill relative px-5 py-2 text-sm md:text-base font-bold tracking-wider transition-colors duration-200 block"
+                className="pill relative px-5 py-2 text-sm md:text-base font-bold tracking-wider transition-colors duration-300 block"
                 style={{
                   color: isHovered ? hoveredPillTextColor : pillTextColor,
                   zIndex: 10,
