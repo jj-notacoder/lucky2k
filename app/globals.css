@@ -508,6 +508,24 @@ img { display: block; max-width: 100%; }
 .flavor-card:hover .glare::after { transform: translateX(130%); }
 .about-card:hover .glare::after { transform: translateX(130%); }
 
+/* ===== GAME modal — CSS infinite animations (not tracked by AnimatePresence,
+   so the modal can exit instantly without waiting on them) ===== */
+@keyframes gameFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.game-float { animation: gameFloat 3.6s ease-in-out infinite; }
+
+@keyframes gameSparkPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+.game-spark-pulse { animation: gameSparkPulse 1.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .game-float, .game-spark-pulse { animation: none; }
+}
+
 /* Translucent tape accents */
 .tape {
   position: absolute;
