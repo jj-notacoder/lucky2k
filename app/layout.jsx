@@ -1,6 +1,6 @@
 import { Bitter, Lora, Lalezar } from 'next/font/google';
 import { LangProvider } from '@/lib/i18n';
-import PinkTrailCursor from '@/components/PinkTrailCursor';
+import FluidCursor from '@/components/FluidCursor';
 import './globals.css';
 
 /* Clarendon stand-in (heavy retro serif) until a licensed Clarendon is added. */
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" dir="ltr">
       <body className={`${bitter.variable} ${lora.variable} ${lalezar.variable}`}>
-        <PinkTrailCursor />
+        <FluidCursor />
         <LangProvider>{children}</LangProvider>
       </body>
     </html>
