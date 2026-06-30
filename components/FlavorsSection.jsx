@@ -106,9 +106,7 @@ export default function FlavorsSection() {
           className="mt-16 flex justify-center"
         >
           <a
-            href={IG}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#game"
             className="inline-block rounded-full border-2 border-[#EF2E31] bg-white/70 px-8 py-3 ff-display font-bold italic text-[#EF2E31] shadow-[0_10px_30px_-8px_rgba(239,46,49,0.6)] transition-transform hover:-translate-y-1 text-[clamp(16px,2vw,22px)]"
           >
             Play for this week’s drop

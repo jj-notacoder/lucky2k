@@ -1,112 +1,105 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 /**
- * FluidCursor — smooth canvas "ribbon" that follows the pointer.
- * The native cursor is KEPT (this only draws a glowing red trail behind it).
- * A chain of points lerps toward the mouse each frame; the stroke is drawn as
- * one continuous, tapering, glowing curve and retracts to nothing when idle.
+ * FluidCursor — Awwwards-level DOM-based chase ribbon cursor.
+ *  • N=18 div nodes trailing the pointer using 0.42 lerp math.
+ *  • Scale decay: 18px down to 3px (18 - 15 * t).
+ *  • 60fps requestAnimationFrame loop running directly on DOM refs (no React state updates).
  */
-const N = 20; // trail length (last ~20 points)
-const BASE_WIDTH = 7;
-
 export default function FluidCursor() {
-  const canvasRef = useRef(null);
+  const cursorRef = useRef(null);
+  const mouseRef = useRef({ x: -100, y: -100 });
+  const ptsRef = useRef([]);
+  const dotsRef = useRef([]);
+  const rafIdRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (window.matchMedia('(pointer: coarse)').matches) return; // no trail on touch
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return; // skip touch devices
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // skip reduced motion
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let raf = 0;
-    let active = false;
+    const container = cursorRef.current;
+    if (!container) return;
 
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const N = 18;
+    ptsRef.current = Array.from({ length: N }).map(() => ({ x: -100, y: -100 }));
+    dotsRef.current = [];
+
+    // Initialize DOM nodes directly for maximum performance
+    for (let i = 0; i < N; i++) {
+      const d = document.createElement('div');
+      d.className = 'awk-grain';
+      d.style.background = 'radial-gradient(closest-side, rgba(239, 46, 49, 0.35), transparent 72%)';
+      container.appendChild(d);
+      dotsRef.current.push(d);
+    }
+
+    const handleMouseMove = (e) => {
+      mouseRef.current.x = e.clientX;
+      mouseRef.current.y = e.clientY;
     };
-    resize();
 
-    const mouse = { x: -100, y: -100 };
-    const pts = Array.from({ length: N }, () => ({ x: -100, y: -100 }));
+    const handleMouseLeave = () => {
+      mouseRef.current.x = -100;
+      mouseRef.current.y = -100;
+    };
 
-    const onMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      if (!active) {
-        for (const p of pts) {
-          p.x = mouse.x;
-          p.y = mouse.y;
-        }
-        active = true;
-      }
-    };
-    const onLeave = () => {
-      mouse.x = -100;
-      mouse.y = -100;
-    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
 
     const loop = () => {
-      // chain follow: head chases the mouse, each point chases the one ahead
-      pts[0].x += (mouse.x - pts[0].x) * 0.45;
-      pts[0].y += (mouse.y - pts[0].y) * 0.45;
-      for (let i = 1; i < N; i++) {
-        pts[i].x += (pts[i - 1].x - pts[i].x) * 0.45;
-        pts[i].y += (pts[i - 1].y - pts[i].y) * 0.45;
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+      const pts = ptsRef.current;
+      const dots = dotsRef.current;
+
+      if (pts.length > 0) {
+        // Lead point chases mouse
+        pts[0].x += (mx - pts[0].x) * 0.42;
+        pts[0].y += (my - pts[0].y) * 0.42;
+
+        // Remaining points chase the point in front of them
+        for (let i = 1; i < N; i++) {
+          pts[i].x += (pts[i - 1].x - pts[i].x) * 0.42;
+          pts[i].y += (pts[i - 1].y - pts[i].y) * 0.42;
+        }
+
+        // Apply scale decay, translate positions and set opacities
+        for (let i = 0; i < N; i++) {
+          const dot = dots[i];
+          const pt = pts[i];
+          if (!dot || !pt) continue;
+
+          const t = i / (N - 1);
+          const size = 18 - 15 * t; // scale decay from 18px down to 3px
+
+          dot.style.width = `${size}px`;
+          dot.style.height = `${size}px`;
+          dot.style.transform = `translate3d(${pt.x - size / 2}px, ${pt.y - size / 2}px, 0)`;
+
+          // Set dataset target and opacity
+          const tgtOpacity = (0.3 * (1 - t) + 0.05).toFixed(3);
+          dot.dataset.tgt = tgtOpacity;
+          dot.style.opacity = tgtOpacity;
+        }
       }
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.strokeStyle = '#EF2E31';
-      // NOTE: glow comes from a CSS drop-shadow on the <canvas> (cheap, GPU)
-      // instead of per-stroke ctx.shadowBlur, which was starving the main thread.
-
-      // one continuous tapering ribbon via quadratic midpoints
-      for (let i = 1; i < N - 1; i++) {
-        const p0 = pts[i - 1];
-        const p1 = pts[i];
-        const p2 = pts[i + 1];
-        ctx.beginPath();
-        ctx.lineWidth = Math.max(0.4, BASE_WIDTH * (1 - i / N));
-        ctx.globalAlpha = Math.max(0, 1 - i / N);
-        ctx.moveTo((p0.x + p1.x) / 2, (p0.y + p1.y) / 2);
-        ctx.quadraticCurveTo(p1.x, p1.y, (p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
-        ctx.stroke();
-      }
-      ctx.globalAlpha = 1;
-
-      raf = requestAnimationFrame(loop);
+      rafIdRef.current = requestAnimationFrame(loop);
     };
 
-    window.addEventListener('pointermove', onMove, { passive: true });
-    document.addEventListener('mouseleave', onLeave);
-    window.addEventListener('resize', resize);
-    raf = requestAnimationFrame(loop);
+    rafIdRef.current = requestAnimationFrame(loop);
 
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('pointermove', onMove);
-      document.removeEventListener('mouseleave', onLeave);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      if (container) {
+        container.innerHTML = '';
+      }
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[9999]"
-      style={{ filter: 'drop-shadow(0 0 5px rgba(239,46,49,0.85))' }}
-    />
-  );
+  return <div ref={cursorRef} className="fixed inset-0 pointer-events-none z-[9999]" />;
 }
