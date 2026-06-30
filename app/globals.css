@@ -506,6 +506,7 @@ img { display: block; max-width: 100%; }
   z-index: 2;
 }
 .flavor-card:hover .glare::after { transform: translateX(130%); }
+.about-card:hover .glare::after { transform: translateX(130%); }
 
 /* Translucent tape accents */
 .tape {
@@ -526,4 +527,9 @@ img { display: block; max-width: 100%; }
 
 @media (prefers-reduced-motion: reduce) {
   .glare::after { transition: none; }
+}
+
+html.hide-cursor,
+html.hide-cursor * {
+  cursor: none !important;
 }
