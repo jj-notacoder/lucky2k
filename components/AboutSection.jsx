@@ -32,13 +32,14 @@ const CARDS = [
   {
     key: 'counter',
     img: '/about/card1.jpg',
-    centerText: 'Just doughnuts, a counter, and a little luck.',
+    centerText: <span>Just doughnuts, <br /> a counter, and a little luck</span>,
     badge: null,
+    textClass: '-translate-y-4 md:-translate-y-6',
   },
   {
     key: 'sunset',
     img: '/about/card2.jpg',
-    centerText: 'Open from sunset, made for after-dark cravings.',
+    centerText: <span>Open from sunset, <br /> made for after-dark cravings</span>,
     badge: '/about/icon-time.png',
     badgeAlt: 'Open after sunset, 7pm',
     badgeClass: '-bottom-6 -left-4 w-28 -rotate-6 md:w-32',
@@ -46,7 +47,7 @@ const CARDS = [
   {
     key: 'mystery',
     img: '/about/card3.jpg',
-    centerText: 'Weekly flavor announced on Instagram.',
+    centerText: <span>Weekly flavor <br /> announced on <br /> Instagram</span>,
     badge: '/about/icon-star.png',
     badgeAlt: 'Weekly lucky flavor',
     badgeClass: 'top-1/2 -left-6 w-24 -translate-y-1/2 -rotate-12 md:w-28',
@@ -54,7 +55,7 @@ const CARDS = [
   {
     key: 'mina',
     img: '/about/card4.jpg',
-    centerText: 'Souq Al Mina, Mina Zayed, down by the sea.',
+    centerText: <span>Souq Al Mina, <br /> Mina Zayed, down <br /> by the sea</span>,
     badge: '/about/icon-location.png',
     badgeAlt: 'See you in the Mina',
     badgeClass: '-bottom-6 -left-4 w-28 -rotate-6 md:w-32',

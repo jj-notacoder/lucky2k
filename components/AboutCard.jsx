@@ -21,6 +21,7 @@ export default function AboutCard({
   badge,
   badgeAlt = '',
   badgeClass = '',
+  textClass = '',
 }) {
   const [hovered, setHovered] = useState(false);
   const ref = useRef(null);
@@ -65,7 +66,7 @@ export default function AboutCard({
 
         {/* centered black text overlay */}
         {centerText && (
-          <div className="absolute inset-0 flex items-center justify-center text-center p-6 text-black font-['Clarendon'] font-black text-xl md:text-2xl lg:text-3xl leading-snug drop-shadow-md z-20 pointer-events-none">
+          <div className={`absolute inset-0 flex items-center justify-center text-center px-10 md:px-14 py-4 text-black font-['Clarendon'] font-black text-lg md:text-xl lg:text-2xl leading-snug drop-shadow-md z-20 pointer-events-none ${textClass}`}>
             {centerText}
           </div>
         )}
