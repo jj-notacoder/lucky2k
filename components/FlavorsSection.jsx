@@ -64,11 +64,11 @@ export default function FlavorsSection() {
             style={{ willChange: 'transform, opacity' }}
             className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-8 md:mb-12"
           >
-            <h2 className="font-['Impact'] italic uppercase text-white text-[clamp(3rem,14vw,3.75rem)] md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide leading-none">
+            <h2 className="font-['Impact'] italic uppercase text-white text-[clamp(3rem,14vw,3.75rem)] md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide leading-none max-md:font-['Impact']">
               {t('flavors.heading')}
             </h2>
             <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]" />
-            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
+            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed max-md:font-['Clarendon']">
               {t('flavors.eyebrow')}
             </p>
           </motion.div>
@@ -120,7 +120,7 @@ export default function FlavorsSection() {
           >
             <a
               href="#game"
-              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-[#EF2E31] bg-white/80 px-6 py-3 text-center ff-display font-bold italic text-[#EF2E31] shadow-[0_10px_30px_-8px_rgba(239,46,49,0.6)] transition-transform hover:-translate-y-1 text-[clamp(1rem,4.6vw,1.375rem)] touch-manipulation"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-[#EF2E31] bg-white/80 px-6 py-3 text-center ff-display font-bold italic text-[#EF2E31] shadow-[0_10px_30px_-8px_rgba(239,46,49,0.6)] transition-transform hover:-translate-y-1 text-[clamp(1rem,4.6vw,1.375rem)] touch-manipulation max-md:font-['Clarendon']"
             >
               {t('flavors.cta')}
             </a>

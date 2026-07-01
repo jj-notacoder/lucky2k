@@ -133,11 +133,11 @@ export default function AboutSection() {
             style={{ willChange: 'transform, opacity' }}
             className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-12 md:mb-16"
           >
-            <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide leading-none">
+            <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide leading-none max-md:font-['Impact']">
               {t('about.heading')}
             </h2>
             <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]" />
-            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
+            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed max-md:font-['Clarendon']">
               {t('about.eyebrow')}
             </p>
           </motion.div>
@@ -151,10 +151,10 @@ export default function AboutSection() {
               style={{ willChange: 'transform, opacity' }}
               className="flex w-full flex-col items-center text-center lg:items-start lg:text-left"
             >
-              <p className="max-w-xl font-['Lora'] text-base font-bold leading-[1.65] text-[#5C0F10] sm:text-lg md:text-xl lg:text-2xl">
+              <p className="max-w-xl font-['Lora'] text-base font-bold leading-[1.65] text-[#5C0F10] sm:text-lg md:text-xl lg:text-2xl max-md:font-['Lora']">
                 {t('about.body')}
               </p>
-              <p className="mt-5 font-['Clarendon'] text-base font-bold text-[#EF2E31] md:mt-6 md:text-lg lg:text-xl">
+              <p className="mt-5 font-['Clarendon'] text-base font-bold text-[#EF2E31] md:mt-6 md:text-lg lg:text-xl max-md:font-['Clarendon']">
                 {t('about.hours')}
               </p>
             </motion.div>

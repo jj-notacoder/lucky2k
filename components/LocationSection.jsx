@@ -60,10 +60,10 @@ function DetailBlock({ icon, title, children }) {
         {icon}
       </motion.div>
       <div>
-        <h3 className="font-['Clarendon'] text-xl md:text-2xl font-black tracking-wide text-[#EF2E31]">
+        <h3 className="font-['Clarendon'] text-xl md:text-2xl font-black tracking-wide text-[#EF2E31] max-md:font-['Clarendon']">
           {title}
         </h3>
-        <p className="mt-2 font-['Lora'] text-base sm:text-lg font-bold leading-relaxed text-[#EF2E31] md:text-xl">
+        <p className="mt-2 font-['Lora'] text-base sm:text-lg font-bold leading-relaxed text-[#EF2E31] md:text-xl max-md:font-['Lora']">
           {children}
         </p>
       </div>
@@ -83,14 +83,14 @@ export default function LocationSection() {
         <div className="mx-auto max-w-6xl">
           {/* STANDARDIZED HEADER: LOCATION */}
           <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-12">
-            <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide">
+            <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide max-md:font-['Impact']">
               {t('location.heading')}
             </h2>
 
             {/* The Glowing Underline */}
             <div className="w-[70%] max-w-[400px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
 
-            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
+            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed max-md:font-['Clarendon']">
               {t('location.eyebrow')}
             </p>
           </div>

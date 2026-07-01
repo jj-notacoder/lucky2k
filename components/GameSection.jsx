@@ -99,14 +99,14 @@ export default function GameSection() {
       <div className="relative z-10 mx-auto max-w-6xl px-5 pt-12 md:pt-16">
         {/* STANDARDIZED HEADER: GET LUCKY */}
         <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-8 md:mb-12">
-          <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide">
+          <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide max-md:font-['Impact']">
             {t('game.heading')}
           </h2>
 
           {/* The Glowing Underline */}
           <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
 
-          <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-sm sm:text-base md:text-xl tracking-[0.12em] sm:tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
+          <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-sm sm:text-base md:text-xl tracking-[0.12em] sm:tracking-[0.16em] md:tracking-[0.25em] leading-relaxed max-md:font-['Clarendon']">
             {t('game.eyebrow')}
           </p>
         </div>
@@ -182,7 +182,7 @@ export default function GameSection() {
           style={{ willChange: 'transform, opacity' }}
           className="mx-auto mt-8 md:mt-10 max-w-xl rounded-2xl border-2 border-[#EF2E31] bg-white/80 px-5 md:px-8 py-5 text-center shadow-[0_0_20px_rgba(239,46,49,0.5)] backdrop-blur-sm"
         >
-          <p className="font-['Clarendon'] text-base sm:text-lg font-black uppercase tracking-wide text-[#EF2E31] md:text-2xl">
+          <p className="font-['Clarendon'] text-base sm:text-lg font-black uppercase tracking-wide text-[#EF2E31] md:text-2xl max-md:font-['Clarendon']">
             {t('game.summary')}
           </p>
         </motion.div>
@@ -233,17 +233,17 @@ export default function GameSection() {
                 style={{ willChange: 'transform, opacity' }}
               />
 
-              <h2 className="relative z-10 font-['Clarendon'] text-3xl md:text-5xl text-center text-white drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] font-bold leading-tight mt-2">
+              <h2 className="relative z-10 font-['Clarendon'] text-3xl md:text-5xl text-center text-white drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] font-bold leading-tight mt-2 max-md:font-['Clarendon']">
                 {t(`game.reveal.${selectedBox}`)}
               </h2>
 
               <div className="relative z-10 text-center">
-                <p className="font-['Lora'] text-lg md:text-xl text-[#EF2E31] font-bold">
+                <p className="font-['Lora'] text-lg md:text-xl text-[#EF2E31] font-bold max-md:font-['Lora']">
                   {isLucky
                     ? t('game.won')
                     : t('game.tryAgain')}
                 </p>
-                <p className="font-['Lora'] text-base md:text-lg text-[#EF2E31] underline mt-1">
+                <p className="font-['Lora'] text-base md:text-lg text-[#EF2E31] underline mt-1 max-md:font-['Lora']">
                   {t('game.tapInstagram')}
                 </p>
               </div>

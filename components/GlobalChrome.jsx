@@ -186,7 +186,7 @@ export default function GlobalChrome() {
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className={`fixed left-3 right-3 top-16 z-[9997] md:hidden rounded-2xl border-2 p-2 shadow-[0_16px_40px_rgba(92,15,16,0.22)] backdrop-blur-md ${isOverDarkSection ? 'border-white bg-black/70' : 'border-[#EF2E31] bg-[#FFC5D0]/95'}`}
           >
-            <nav aria-label={t('nav.mobilePrimary')} className="flex flex-col gap-1 font-['Clarendon']">
+            <nav aria-label={t('nav.mobilePrimary')} className="flex flex-col gap-1 font-['Clarendon'] max-md:font-['Clarendon']">
               {navItems.map((item) => (
                 <a
                   key={item.href}

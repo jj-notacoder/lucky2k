@@ -44,12 +44,12 @@ export default function FlavorCard({
       style={{ willChange: 'transform, opacity' }}
     >
       {title && (
-        <div className="mb-3 mobile-only-flex flex-col items-center rounded-xl border-2 border-[#EF2E31] bg-white/85 px-4 py-3 text-center shadow-[0_0_18px_rgba(239,46,49,0.28)] backdrop-blur-sm">
-          <span className="font-['Impact'] text-[clamp(2rem,11vw,2.75rem)] leading-none text-[#EF2E31] tracking-wide">
+        <div className="mb-3 mobile-only-flex flex-col items-center rounded-xl border-2 border-[#EF2E31] bg-white/85 px-4 py-3 text-center shadow-[0_0_18px_rgba(239,46,49,0.28)] backdrop-blur-sm max-md:mb-2 max-md:border-none max-md:bg-transparent max-md:p-2 max-md:shadow-none max-md:backdrop-blur-none">
+          <span className="font-['Impact'] text-[clamp(2rem,11vw,2.75rem)] leading-none text-[#EF2E31] tracking-wide max-md:text-[1.7rem] max-md:leading-tight max-md:tracking-tighter">
             {title}
           </span>
           {sub && (
-            <span className="mt-1 font-['Clarendon'] text-sm font-black uppercase tracking-[0.16em] text-[#EF2E31]">
+            <span className="mt-1 font-['Clarendon'] text-sm font-black uppercase tracking-[0.16em] text-[#EF2E31] max-md:text-sm max-md:leading-tight max-md:tracking-tighter">
               {sub}
             </span>
           )}
