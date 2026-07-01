@@ -91,7 +91,7 @@ export default function Hero() {
       
       {/* INDEPENDENT SCROLL PROGRESS BAR */}
       <motion.div 
-        className={`fixed top-0 left-0 h-1 w-full origin-left z-[10000] transition-colors duration-300 ${isOverDarkSection ? 'bg-white' : 'bg-[#EF2E31]'}`}
+        className={`fixed top-0 left-0 h-1 w-full origin-left z-[9999] transition-colors duration-300 ${isOverDarkSection ? 'bg-white' : 'bg-[#EF2E31]'}`}
         style={{
           scaleX,
           backgroundColor: isOverDarkSection ? '#FFFFFF' : '#EF2E31',
@@ -111,7 +111,7 @@ export default function Hero() {
         animate={{ y: isNavVisible ? 0 : "-100%", opacity: 1 }}
         transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
         onMouseLeave={() => { if (scrollY.get() > 50) setIsNavVisible(false); }}
-        className={`fixed top-0 left-0 w-full h-14 md:h-16 z-[9999] grid grid-cols-3 items-center px-6 md:px-10 backdrop-blur-md transition-colors duration-300 ${isOverDarkSection ? 'bg-black/20' : 'bg-[#FFC5D0]/90'}`}
+        className={`fixed top-0 left-0 w-full h-14 md:h-16 z-[9998] grid grid-cols-3 items-center px-6 md:px-10 backdrop-blur-md transition-colors duration-300 ${isOverDarkSection ? 'bg-black/20' : 'bg-[#FFC5D0]/90'}`}
         style={{
           backgroundColor: isOverDarkSection ? 'rgba(0,0,0,0.2)' : 'rgba(255,197,208,0.9)',
           willChange: 'transform, opacity',

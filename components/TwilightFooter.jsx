@@ -9,19 +9,19 @@ function seededValue(index, salt) {
 }
 
 export function TwilightFooter() {
-  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
   const reduce = useReducedMotion();
   const isMobile = useIsMobileViewport();
   const particleCount = reduce ? 0 : isMobile ? 15 : 40;
   
-  // Parallax Physics: Tracks the section as it enters the viewport
+  // Parallax Physics: Tracks the section as it enters/exits the viewport.
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: containerRef,
     offset: ["start end", "end end"]
   });
   
-  // Reversed Hero-sun physics: hidden below, then rests lower so the full moon is never exposed.
-  const moonY = useTransform(scrollYProgress, [0, 1], ["100%", "40%"]);
+  // Reversed Hero-sun physics: hidden one viewport below, then returns to its static wrapper rest.
+  const moonY = useTransform(scrollYProgress, (progress) => `${(1 - progress) * 100}vh`);
   const stars = useMemo(
     () =>
       Array.from({ length: particleCount }).map((_, i) => ({
@@ -42,7 +42,7 @@ export function TwilightFooter() {
 
       <section 
         id="twilight-footer" 
-        ref={sectionRef} 
+        ref={containerRef} 
         className="relative w-full h-[150vh] overflow-hidden bg-gradient-to-b from-[#2A000A] via-[#4A0011] to-[#1A0005]"
       >
         {/* 2. The Twilight Overlay */}
@@ -91,7 +91,10 @@ export function TwilightFooter() {
         </div>
 
         {/* THE PARALLAX MOON: Hero sun structure, reversed upward trajectory */}
-        <div className="absolute bottom-0 inset-x-0 z-30 flex w-full justify-center pointer-events-none">
+        <div
+          className="absolute bottom-0 inset-x-0 z-30 flex w-full justify-center pointer-events-none"
+          style={{ transform: 'translateY(40%)' }}
+        >
           <motion.div
             style={{ y: moonY, willChange: 'transform' }}
             className="w-[90%] md:w-[70%] max-w-4xl max-h-[45vh] flex justify-center transform-gpu"
