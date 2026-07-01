@@ -149,7 +149,7 @@ export default function AboutSection() {
               viewport={{ once: false, amount: 0.4 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               style={{ willChange: 'transform, opacity' }}
-              className="flex w-full flex-col items-center text-center lg:items-start lg:text-left"
+              className="flex w-full flex-col items-center text-center"
             >
               <p className="max-w-xl font-['Lora'] text-base font-bold leading-[1.65] text-[#5C0F10] sm:text-lg md:text-xl lg:text-2xl max-md:font-['Lora']">
                 {t('about.body')}
