@@ -20,8 +20,8 @@ export function TwilightFooter() {
     offset: ["start end", "end end"]
   });
   
-  // Moon starts hidden below its own bounds, then rests at its native CSS anchor.
-  const moonY = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["100%", "0%"]);
+  // Moon starts one viewport below, then rests at its native CSS anchor.
+  const moonY = useTransform(scrollYProgress, [0, 1], reduce ? ["0px", "0px"] : ["100vh", "0px"]);
   const stars = useMemo(
     () =>
       Array.from({ length: particleCount }).map((_, i) => ({
@@ -36,7 +36,7 @@ export function TwilightFooter() {
   );
 
   return (
-    <div className="relative w-full">
+    <>
       {/* 1. Thick White Divider */}
       <div className="w-full h-3 md:h-4 bg-white relative z-50 shadow-sm" />
 
@@ -87,21 +87,21 @@ export function TwilightFooter() {
           </div>
         </div>
 
-        {/* 2. BOTTOM ZONE: The Parallax Moon */}
-        <div className="relative z-30 w-full flex justify-center items-end mt-auto">
+        {/* THE PARALLAX MOON (Adjusted for strict ceiling/non-overlap) */}
+        <div className="absolute -bottom-12 md:-bottom-72 left-1/2 z-30 mb-16 md:mb-24 -translate-x-1/2 flex w-full justify-center pointer-events-none">
           <motion.img
-            src="/donutfinal/moon.webp"
+            src="/donutfinal/moon.png"
             alt="Rising Moon"
             width={1419}
             height={464}
             loading="lazy"
             decoding="async"
             style={{ y: moonY, willChange: 'transform' }}
-            className="w-[85%] md:w-[50%] max-w-2xl max-h-[35vh] object-contain object-bottom origin-bottom pointer-events-none transform-gpu"
+            className="w-[85vw] md:w-auto h-auto max-h-[35vh] md:max-h-[40vh] object-contain origin-bottom pointer-events-none transform-gpu"
           />
         </div>
       </section>
-    </div>
+    </>
   );
 }
 

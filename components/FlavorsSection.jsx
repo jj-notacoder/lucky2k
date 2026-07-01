@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import FlavorCard from './FlavorCard';
+import ScallopTransition from './ScallopTransition';
 import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
 
 const IG = 'https://www.instagram.com/luckytwothousand/';
@@ -34,22 +35,11 @@ export default function FlavorsSection() {
   const visibleClovers = reduce ? [] : CLOVERS.slice(0, isMobile ? 8 : CLOVERS.length);
 
   return (
-    <section id="flavors" className="relative z-20 w-full overflow-x-clip candy-stripes pb-24 md:pb-32">
-      {/* CUSTOM IMAGE TRANSITION (Hero to Flavors) */}
-      <div className="relative z-30 h-[116px] w-full overflow-hidden pointer-events-none md:h-[168px]">
-        <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#EF2E31]" />
-        <div className="absolute inset-x-0 top-2 z-10 h-1 bg-[#EF2E31]" />
-        <img
-          src="/donutfinal/top of flavours.webp"
-          alt="Scalloped Transition"
-          width={1536}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-          className="block w-full h-auto -translate-y-[20%]"
-        />
-      </div>
+    <section id="flavors" className="relative z-20 w-full pt-24 md:pt-32">
+      {/* CEILING-PINNED SCALLOP TRANSITION */}
+      <ScallopTransition />
 
+      <div className="relative overflow-x-clip candy-stripes pb-24 md:pb-32">
       {/* dense, more-visible floating clovers */}
       {visibleClovers.map((c, i) => (
         <motion.img
@@ -136,6 +126,7 @@ export default function FlavorsSection() {
             Play for this week’s drop
           </a>
         </motion.div>
+      </div>
       </div>
     </section>
   );

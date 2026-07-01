@@ -4,6 +4,7 @@ import AboutSection from '@/components/AboutSection';
 import GameSection from '@/components/GameSection';
 import TwilightFooter from '@/components/TwilightFooter';
 import LocationSection from '@/components/LocationSection';
+import SiteFooter from '@/components/SiteFooter';
 
 export default function Page() {
   return (
@@ -13,9 +14,10 @@ export default function Page() {
         <FlavorsSection />
         <AboutSection />
         <GameSection />
-        <TwilightFooter />
         <LocationSection />
+        <TwilightFooter />
       </main>
+      <SiteFooter />
     </>
   );
 }
