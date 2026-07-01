@@ -99,7 +99,7 @@ export default function GameSection() {
       <div className="relative z-10 mx-auto max-w-6xl px-5 pt-12 md:pt-16">
         {/* STANDARDIZED HEADER: GET LUCKY */}
         <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-8 md:mb-12">
-          <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide max-md:font-['Impact']">
+          <h2 className="font-['Impact'] font-black italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide max-md:font-['Impact']">
             {t('game.heading')}
           </h2>
 

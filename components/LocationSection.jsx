@@ -83,7 +83,7 @@ export default function LocationSection() {
         <div className="mx-auto max-w-6xl">
           {/* STANDARDIZED HEADER: LOCATION */}
           <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-12">
-            <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide max-md:font-['Impact']">
+            <h2 className="font-['Impact'] font-black italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide max-md:font-['Impact']">
               {t('location.heading')}
             </h2>
 
