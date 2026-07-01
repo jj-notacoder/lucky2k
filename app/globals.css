@@ -556,3 +556,26 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
   will-change: transform, width, height;
 }
+
+/* Responsive safety helpers placed after legacy utility fallbacks so they win. */
+.mobile-only-flex {
+  display: flex !important;
+}
+.desktop-only-flex {
+  display: none !important;
+}
+.desktop-only-block {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .mobile-only-flex {
+    display: none !important;
+  }
+  .desktop-only-flex {
+    display: flex !important;
+  }
+  .desktop-only-block {
+    display: block !important;
+  }
+}

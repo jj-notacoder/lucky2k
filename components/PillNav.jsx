@@ -27,7 +27,7 @@ export default function PillNav({
           href={item.href}
           onMouseEnter={() => setActive(i)}
           onMouseLeave={() => setActive(-1)}
-          className="rounded-full px-3 py-1.5 text-sm md:text-base font-bold whitespace-nowrap transition-colors duration-200"
+          className="flex min-h-11 items-center rounded-full px-3 py-1.5 text-sm md:text-base font-bold whitespace-nowrap transition-colors duration-200 touch-manipulation"
           style={{
             color: active === i ? hoveredPillTextColor : pillTextColor,
             backgroundColor: active === i ? baseColor : 'transparent',

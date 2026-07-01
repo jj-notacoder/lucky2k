@@ -66,7 +66,7 @@ export default function AboutCard({
       className={`about-card relative [transform-style:preserve-3d] transform-gpu ${canHover ? 'group' : ''}`}
     >
       {/* card container */}
-      <div className="relative overflow-hidden rounded-3xl border-2 border-[#EF2E31] shadow-[0_0_20px_rgba(239,46,49,0.5)] transition-shadow duration-500 group-hover:shadow-[0_0_35px_rgba(239,46,49,0.85)] bg-white z-10 aspect-[16/10] h-full w-full">
+      <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border-2 border-[#EF2E31] shadow-[0_0_20px_rgba(239,46,49,0.5)] transition-shadow duration-500 group-hover:shadow-[0_0_35px_rgba(239,46,49,0.85)] bg-white z-10 aspect-[16/10] h-full w-full">
         {/* card image */}
         <img
           src={img}
@@ -82,7 +82,7 @@ export default function AboutCard({
 
         {/* centered black text overlay */}
         {centerText && (
-          <div className={`absolute inset-0 flex items-center justify-center text-center px-10 md:px-14 py-4 text-black font-['Clarendon'] font-black text-lg md:text-xl lg:text-2xl leading-snug drop-shadow-md z-20 pointer-events-none ${textClass}`}>
+          <div className={`absolute inset-0 flex items-center justify-center text-center px-5 sm:px-8 md:px-14 py-4 text-black font-['Clarendon'] font-black text-base sm:text-lg md:text-xl lg:text-2xl leading-snug drop-shadow-md z-20 pointer-events-none ${textClass}`}>
             {centerText}
           </div>
         )}

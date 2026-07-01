@@ -104,7 +104,7 @@ export default function GameSection() {
           {/* The Glowing Underline */}
           <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
 
-          <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-lg md:text-xl tracking-[0.2em] md:tracking-[0.25em]">
+          <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-sm sm:text-base md:text-xl tracking-[0.12em] sm:tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
             TAKE A CHANCE ON OUR WEEKLY MYSTERY DROP
           </p>
         </div>
@@ -138,7 +138,7 @@ export default function GameSection() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: false, amount: 0.4 }}
-            className="relative z-20 mx-auto grid max-w-5xl grid-cols-5 gap-2 sm:gap-4"
+            className="relative z-20 mx-auto grid max-w-5xl grid-cols-5 gap-1.5 sm:gap-4"
           >
             {[1, 2, 3, 4, 5].map((n) => (
               <motion.button
@@ -150,7 +150,7 @@ export default function GameSection() {
                 whileTap={{ scale: 0.95, rotate: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 16 }}
                 aria-label={`Open mystery box ${n}`}
-                className={`relative min-h-11 touch-manipulation outline-none transform-gpu ${canHover ? 'group' : ''}`}
+                className={`relative min-h-11 min-w-0 touch-manipulation outline-none transform-gpu ${canHover ? 'group' : ''}`}
                 style={{ willChange: 'transform, opacity' }}
               >
                 <img
@@ -178,9 +178,9 @@ export default function GameSection() {
           viewport={{ once: false, amount: 0.6 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           style={{ willChange: 'transform, opacity' }}
-          className="mx-auto mt-8 md:mt-10 max-w-xl rounded-2xl border-2 border-[#EF2E31] bg-white/80 px-8 py-5 text-center shadow-[0_0_20px_rgba(239,46,49,0.5)] backdrop-blur-sm"
+          className="mx-auto mt-8 md:mt-10 max-w-xl rounded-2xl border-2 border-[#EF2E31] bg-white/80 px-5 md:px-8 py-5 text-center shadow-[0_0_20px_rgba(239,46,49,0.5)] backdrop-blur-sm"
         >
-          <p className="font-['Clarendon'] text-xl font-black uppercase tracking-wide text-[#EF2E31] md:text-2xl">
+          <p className="font-['Clarendon'] text-base sm:text-lg font-black uppercase tracking-wide text-[#EF2E31] md:text-2xl">
             4 Regulars. 1 Mystery Drop.
           </p>
         </motion.div>

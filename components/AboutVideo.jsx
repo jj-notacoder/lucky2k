@@ -5,7 +5,7 @@
  */
 export default function AboutVideo() {
   return (
-    <div className="relative mx-auto w-full max-w-sm">
+    <div className="relative mx-auto w-[82vw] max-w-[22rem] sm:w-full sm:max-w-sm">
       {/* diffused white glow behind the card */}
       <div
         className="absolute -inset-8 z-0 rounded-[48px]"
@@ -44,7 +44,7 @@ export default function AboutVideo() {
         height={231}
         loading="lazy"
         decoding="async"
-        className="pointer-events-none absolute -bottom-7 -left-6 z-20 w-28 select-none drop-shadow-[0_10px_18px_rgba(92,15,16,0.3)] md:w-32"
+        className="pointer-events-none absolute -bottom-6 -left-4 z-20 w-20 select-none drop-shadow-[0_10px_18px_rgba(92,15,16,0.3)] sm:w-28 md:w-32"
         draggable="false"
       />
       <img
@@ -55,7 +55,7 @@ export default function AboutVideo() {
         height={309}
         loading="lazy"
         decoding="async"
-        className="pointer-events-none absolute -bottom-8 -right-5 z-20 w-24 select-none drop-shadow-[0_10px_18px_rgba(92,15,16,0.3)] md:w-28"
+        className="pointer-events-none absolute -bottom-7 -right-4 z-20 w-18 select-none drop-shadow-[0_10px_18px_rgba(92,15,16,0.3)] sm:w-24 md:w-28"
         draggable="false"
       />
     </div>

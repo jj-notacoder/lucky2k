@@ -59,22 +59,22 @@ export default function FlavorsSection() {
       ))}
 
       <div className="relative z-10 mx-auto max-w-6xl px-5 pt-16 md:pt-20">
-        {/* header */}
+        {/* STANDARDIZED HEADER: THE FLAVORS */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           style={{ willChange: 'transform, opacity' }}
-          className="text-center"
+          className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-8 md:mb-12"
         >
-          <p className="font-['Clarendon'] text-xl lg:text-2xl font-bold tracking-widest text-[#EF2E31]">
-            DOUGHNUTS BUT ABU DHABI
-          </p>
-          <h2 className="neon-flavors ff-display mt-3 font-black italic tracking-wide text-[clamp(42px,8vw,88px)]">
+          <h2 className="font-['Impact'] italic uppercase text-white text-[clamp(3rem,14vw,3.75rem)] md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide leading-none">
             THE FLAVORS
           </h2>
-          <div className="h-1.5 w-3/4 mx-auto bg-white rounded-full shadow-[0_0_10px_#EF2E31,0_0_20px_#EF2E31,0_0_30px_#EF2E31] mt-4"></div>
+          <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
+          <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
+            DOUGHNUTS BUT ABU DHABI
+          </p>
         </motion.div>
 
         {/* top row — 4 flavours (grid updated) */}
@@ -83,7 +83,7 @@ export default function FlavorsSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.2 }}
-          className="mt-28 md:mt-36 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-24 w-full max-w-7xl mx-auto z-10 transform-gpu"
+          className="mt-14 md:mt-36 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 md:gap-y-24 w-full max-w-7xl mx-auto z-10 transform-gpu"
         >
           {FLAVORS.map(({ key, ...f }) => (
             <FlavorCard key={key} {...f} />
@@ -98,7 +98,7 @@ export default function FlavorsSection() {
           viewport={{ once: false, amount: 0.3 }}
           className="flex justify-center"
         >
-          <div className="relative w-full max-w-4xl mx-auto mt-44 z-10">
+          <div className="relative w-full max-w-4xl mx-auto mt-20 md:mt-44 z-10">
             <FlavorCard
               wide
               img="/flavours/lucky.webp"
@@ -117,11 +117,11 @@ export default function FlavorsSection() {
           viewport={{ once: false }}
           transition={{ duration: 0.5, delay: 0.1 }}
           style={{ willChange: 'transform, opacity' }}
-          className="mt-16 flex justify-center"
+          className="mt-14 md:mt-16 flex justify-center"
         >
           <a
             href="#game"
-            className="inline-block rounded-full border-2 border-[#EF2E31] bg-white/70 px-8 py-3 ff-display font-bold italic text-[#EF2E31] shadow-[0_10px_30px_-8px_rgba(239,46,49,0.6)] transition-transform hover:-translate-y-1 text-[clamp(16px,2vw,22px)]"
+            className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-[#EF2E31] bg-white/80 px-6 py-3 text-center ff-display font-bold italic text-[#EF2E31] shadow-[0_10px_30px_-8px_rgba(239,46,49,0.6)] transition-transform hover:-translate-y-1 text-[clamp(1rem,4.6vw,1.375rem)] touch-manipulation"
           >
             Play for this week’s drop
           </a>

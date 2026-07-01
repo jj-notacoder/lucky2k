@@ -50,7 +50,7 @@ function ClockIcon() {
 
 function DetailBlock({ icon, title, children }) {
   return (
-    <div className="flex items-start gap-5">
+    <div className="flex items-start gap-3 sm:gap-5">
       <motion.div
         className="shrink-0"
         animate={{ scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }}
@@ -60,10 +60,10 @@ function DetailBlock({ icon, title, children }) {
         {icon}
       </motion.div>
       <div>
-        <h3 className="font-['Clarendon'] text-2xl font-black tracking-wide text-[#EF2E31]">
+        <h3 className="font-['Clarendon'] text-xl md:text-2xl font-black tracking-wide text-[#EF2E31]">
           {title}
         </h3>
-        <p className="mt-2 font-['Lora'] text-lg font-bold leading-relaxed text-[#EF2E31] md:text-xl">
+        <p className="mt-2 font-['Lora'] text-base sm:text-lg font-bold leading-relaxed text-[#EF2E31] md:text-xl">
           {children}
         </p>
       </div>
@@ -91,13 +91,13 @@ export default function LocationSection() {
             {/* The Glowing Underline */}
             <div className="w-[70%] max-w-[400px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
 
-            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-lg md:text-xl tracking-[0.2em] md:tracking-[0.25em]">
+            <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
               WHERE TO FIND US.
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="flex flex-col gap-10">
+          <div className="mt-10 md:mt-12 grid grid-cols-1 items-center gap-10 md:gap-12 md:grid-cols-2">
+            <div className="flex flex-col gap-8 md:gap-10">
               <DetailBlock title="LOCATION" icon={<MapPinIcon />}>
                 {luckyAddress}
               </DetailBlock>
@@ -112,7 +112,7 @@ export default function LocationSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open Lucky 2000 location in Google Maps"
-              className="relative block aspect-[4/3] w-full overflow-hidden rounded-2xl border-4 border-[#EF2E31] bg-[#FFC5D0] shadow-[0_0_20px_rgba(239,46,49,0.4)] transition-transform duration-300 hover:-translate-y-1"
+              className="relative block aspect-[4/3] w-full overflow-hidden rounded-2xl border-4 border-[#EF2E31] bg-[#FFC5D0] shadow-[0_0_20px_rgba(239,46,49,0.4)] transition-transform duration-300 hover:-translate-y-1 touch-manipulation"
             >
               <img
                 src="/donutfinal/map.jpg"
