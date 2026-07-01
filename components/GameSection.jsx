@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useCanHover, useIsMobileViewport } from '@/lib/useResponsivePerformance';
 import ScallopTransition from './ScallopTransition';
@@ -34,6 +35,7 @@ const boxItem = {
 
 export default function GameSection() {
   const [selectedBox, setSelectedBox] = useState(null);
+  const [isPortalReady, setIsPortalReady] = useState(false);
   const reduce = useReducedMotion();
   const canHover = useCanHover();
   const isMobile = useIsMobileViewport();
@@ -55,7 +57,20 @@ export default function GameSection() {
     };
   }, [handleCloseModal, selectedBox]);
 
+  useEffect(() => {
+    document.body.style.overflow = selectedBox ? 'hidden' : 'unset';
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedBox]);
+
+  useEffect(() => {
+    setIsPortalReady(true);
+  }, []);
+
   return (
+    <>
     <section id="game" className="relative z-20 w-full candy-stripes pt-24 md:pt-32">
       {/* CEILING-PINNED SCALLOP TRANSITION */}
       <ScallopTransition />
@@ -172,12 +187,13 @@ export default function GameSection() {
       </div>
       </div>
 
-      {/* ---- cinematic modal (clickable card, responsive content stack) ---- */}
+    </section>
+    {isPortalReady && createPortal(
       <AnimatePresence>
         {selectedBox && data && (
           <motion.div
             key="game-modal"
-            className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-[9950] w-screen h-[100dvh] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
             onClick={handleCloseModal}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -232,7 +248,9 @@ export default function GameSection() {
             </motion.a>
           </motion.div>
         )}
-      </AnimatePresence>
-    </section>
+      </AnimatePresence>,
+      document.body
+    )}
+    </>
   );
 }
