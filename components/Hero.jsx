@@ -2,8 +2,10 @@
 
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useLanguage } from '@/lib/i18n';
 
-export default function Hero({ isArabic }) {
+export default function Hero() {
+  const { t } = useLanguage();
   const heroRef = useRef(null);
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
@@ -17,7 +19,7 @@ export default function Hero({ isArabic }) {
         {/* Main Logo */}
         <motion.img
           src="/donutfinal/logo.webp"
-          alt="Lucky 2000 Logo"
+          alt={t('hero.logoAlt')}
           width={561}
           height={445}
           loading="eager"
@@ -32,10 +34,10 @@ export default function Hero({ isArabic }) {
 
         {/* Animated Subtitle (Dynamic EN/AR) */}
         <motion.img
-          src={isArabic ? '/donutfinal/donutsfrom sunset - arabic.webp' : '/donutfinal/donutsfrom_sunset.webp'}
-          alt="Doughnuts from sunset"
-          width={isArabic ? 1536 : 624}
-          height={isArabic ? 1024 : 97}
+          src={t('hero.subtitleImage')}
+          alt={t('hero.subtitleAlt')}
+          width={t('hero.subtitleWidth')}
+          height={t('hero.subtitleHeight')}
           loading="eager"
           decoding="async"
           fetchPriority="high"
@@ -43,11 +45,7 @@ export default function Hero({ isArabic }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 }}
           style={{ willChange: 'transform, opacity' }}
-          className={`object-contain pointer-events-auto transition-all duration-300 ${
-            isArabic
-              ? 'h-[48px] md:h-[64px] lg:h-[72px] mt-2 md:mt-4'
-              : 'h-[36px] md:h-[48px] lg:h-[56px] mt-6 md:mt-8'
-          }`}
+          className={`object-contain pointer-events-auto transition-all duration-300 ${t('hero.subtitleClass')}`}
         />
       </div>
 
@@ -61,7 +59,7 @@ export default function Hero({ isArabic }) {
         >
           <motion.img
             src="/donutfinal/sun.webp"
-            alt="Setting Sun"
+            alt={t('hero.sunAlt')}
             width={2384}
             height={947}
             loading="eager"

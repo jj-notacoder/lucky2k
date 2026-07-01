@@ -31,6 +31,17 @@
 .font-\[\'Lora\'\] {
   font-family: 'Lora', var(--font-body), var(--font-ar), Georgia, serif !important;
 }
+html[dir='rtl'] .font-\[\'Clarendon\'\],
+html[dir='rtl'] .font-clarendon,
+html[dir='rtl'] .font-\[\'Impact\'\],
+html[dir='rtl'] .font-\[\'Lora\'\],
+html[dir='rtl'] .ff-display,
+html[dir='rtl'] .ff-body {
+  font-family: var(--font-ar), 'Tajawal', Arial, sans-serif !important;
+}
+html[dir='rtl'] body {
+  font-family: var(--font-ar), 'Tajawal', Arial, sans-serif;
+}
 
 /* Tailwind utility mappings for absolute inset layout */
 .fixed { position: fixed; }

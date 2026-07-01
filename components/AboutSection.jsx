@@ -6,6 +6,7 @@ import AboutCard from './AboutCard';
 import AboutVideo from './AboutVideo';
 import ScallopTransition from './ScallopTransition';
 import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
+import { useLanguage } from '@/lib/i18n';
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.16 } } };
 
@@ -33,37 +34,31 @@ const CARDS = [
   {
     key: 'counter',
     img: '/about/card1.webp',
-    centerText: <span>Just doughnuts, <br /> a counter, and a little luck</span>,
     badge: null,
     textClass: 'md:-translate-y-6',
   },
   {
     key: 'sunset',
     img: '/about/card2.webp',
-    centerText: <span>Open from sunset, <br /> made for after-dark cravings</span>,
     badge: '/about/icon-time.webp',
-    badgeAlt: 'Open after sunset, 7pm',
     badgeClass: '-bottom-5 -left-3 w-24 -rotate-6 md:-bottom-6 md:-left-4 md:w-32',
   },
   {
     key: 'mystery',
     img: '/about/card3.webp',
-    centerText: <span>Weekly flavor <br /> announced on <br /> Instagram</span>,
     badge: '/about/icon-star.webp',
-    badgeAlt: 'Weekly lucky flavor',
     badgeClass: 'top-1/2 -left-4 w-20 -translate-y-1/2 -rotate-12 md:-left-6 md:w-28',
   },
   {
     key: 'mina',
     img: '/about/card4.webp',
-    centerText: <span>Souq Al Mina, <br /> Mina Zayed, down <br /> by the sea</span>,
     badge: '/about/icon-location.webp',
-    badgeAlt: 'See you in the Mina',
     badgeClass: '-bottom-5 -left-3 w-24 -rotate-6 md:-bottom-6 md:-left-4 md:w-32',
   },
 ];
 
 export default function AboutSection() {
+  const { t } = useLanguage();
   const [clientDice, setClientDice] = useState([]);
   const reduce = useReducedMotion();
   const isMobile = useIsMobileViewport();
@@ -139,11 +134,11 @@ export default function AboutSection() {
             className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-12 md:mb-16"
           >
             <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide leading-none">
-              ABOUT US
+              {t('about.heading')}
             </h2>
             <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]" />
             <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
-              NOT YOUR ORDINARY DOUGHNUTS
+              {t('about.eyebrow')}
             </p>
           </motion.div>
 
@@ -157,11 +152,10 @@ export default function AboutSection() {
               className="flex w-full flex-col items-center text-center lg:items-start lg:text-left"
             >
               <p className="max-w-xl font-['Lora'] text-base font-bold leading-[1.65] text-[#5C0F10] sm:text-lg md:text-xl lg:text-2xl">
-                We&rsquo;re a small, no-fuss doughnut counter in Mina Zayed, a few steps from Marmellata. We open after
-                sunset with a short menu of filled doughnuts - four regulars, and one lucky flavor that changes every week.
+                {t('about.body')}
               </p>
               <p className="mt-5 font-['Clarendon'] text-base font-bold text-[#EF2E31] md:mt-6 md:text-lg lg:text-xl">
-                Friday - Sunday, sunset &rsquo;til sellout.
+                {t('about.hours')}
               </p>
             </motion.div>
 
@@ -185,7 +179,12 @@ export default function AboutSection() {
             className="mt-20 grid grid-cols-1 gap-x-8 gap-y-12 md:mt-32 md:grid-cols-2 md:gap-y-20 lg:mt-40"
           >
             {CARDS.map(({ key, ...c }) => (
-              <AboutCard key={key} {...c} />
+              <AboutCard
+                key={key}
+                {...c}
+                badgeAlt={t(`about.badgeAlts.${key}`)}
+                centerText={<span>{t(`about.cards.${key}`)}</span>}
+              />
             ))}
           </motion.div>
         </div>

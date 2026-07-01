@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ScallopTransition from './ScallopTransition';
+import { useLanguage } from '@/lib/i18n';
 
 const MAP_LINK = 'https://maps.app.goo.gl/xCtYcEf1xkFP7oCC7';
 
@@ -72,8 +72,7 @@ function DetailBlock({ icon, title, children }) {
 }
 
 export default function LocationSection() {
-  const [luckyAddress] = useState('22 Al Mutqin St, Zayed Port, Abu Dhabi');
-  const [luckyHours] = useState('Friday - Sunday, 7pm - 10pm');
+  const { t } = useLanguage();
 
   return (
     <section id="location" className="relative z-20 w-full candy-stripes pt-24 md:pt-32">
@@ -85,25 +84,25 @@ export default function LocationSection() {
           {/* STANDARDIZED HEADER: LOCATION */}
           <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-12">
             <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide">
-              LOCATION
+              {t('location.heading')}
             </h2>
 
             {/* The Glowing Underline */}
             <div className="w-[70%] max-w-[400px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
 
             <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-base md:text-xl tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
-              WHERE TO FIND US.
+              {t('location.eyebrow')}
             </p>
           </div>
 
           <div className="mt-10 md:mt-12 grid grid-cols-1 items-center gap-10 md:gap-12 md:grid-cols-2">
             <div className="flex flex-col gap-8 md:gap-10">
-              <DetailBlock title="LOCATION" icon={<MapPinIcon />}>
-                {luckyAddress}
+              <DetailBlock title={t('location.title')} icon={<MapPinIcon />}>
+                {t('location.address')}
               </DetailBlock>
 
-              <DetailBlock title="HOURS" icon={<ClockIcon />}>
-                {luckyHours}
+              <DetailBlock title={t('location.hoursTitle')} icon={<ClockIcon />}>
+                {t('location.hours')}
               </DetailBlock>
             </div>
 
@@ -111,12 +110,12 @@ export default function LocationSection() {
               href={MAP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Open Lucky 2000 location in Google Maps"
+              aria-label={t('location.mapAria')}
               className="relative block aspect-[4/3] w-full overflow-hidden rounded-2xl border-4 border-[#EF2E31] bg-[#FFC5D0] shadow-[0_0_20px_rgba(239,46,49,0.4)] transition-transform duration-300 hover:-translate-y-1 touch-manipulation"
             >
               <img
                 src="/donutfinal/map.jpg"
-                alt="Lucky 2000 location map"
+                alt={t('location.mapAlt')}
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover"

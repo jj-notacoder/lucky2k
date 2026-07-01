@@ -1,6 +1,3 @@
-'use client';
-
-import { useState } from 'react';
 import Hero from '@/components/Hero';
 import GlobalChrome from '@/components/GlobalChrome';
 import FlavorsSection from '@/components/FlavorsSection';
@@ -11,13 +8,11 @@ import LocationSection from '@/components/LocationSection';
 import SiteFooter from '@/components/SiteFooter';
 
 export default function Page() {
-  const [isArabic, setIsArabic] = useState(false);
-
   return (
     <>
-      <GlobalChrome isArabic={isArabic} setIsArabic={setIsArabic} />
+      <GlobalChrome />
       <main className="relative z-0">
-        <Hero isArabic={isArabic} />
+        <Hero />
         <FlavorsSection />
         <AboutSection />
         <GameSection />

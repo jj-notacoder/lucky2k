@@ -1,3 +1,7 @@
+'use client';
+
+import { useLanguage } from '@/lib/i18n';
+
 /**
  * ScallopTransition — Absolute-positioned, lightly shifted scallop overlay.
  *
@@ -8,6 +12,8 @@
  *   on the same element (CSS spec forces overflow-y:clip alongside overflow-x:clip).
  */
 export default function ScallopTransition() {
+  const { t } = useLanguage();
+
   return (
     /* LOCKED UNIFIED SCALLOPED TRANSITION - VISUAL FIX */
     <div className="absolute left-0 right-0 top-0 z-50 w-full -translate-y-[2px] pointer-events-none">
@@ -18,7 +24,7 @@ export default function ScallopTransition() {
         {/* 1. The WebP Image */}
         <img
           src="/donutfinal/top of flavours.webp"
-          alt="Section Transition"
+          alt={t('transition.sectionAlt')}
           className="block w-full h-auto object-cover object-top"
         />
 

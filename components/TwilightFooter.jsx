@@ -3,12 +3,14 @@
 import { useMemo, useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
+import { useLanguage } from '@/lib/i18n';
 
 function seededValue(index, salt) {
   return Math.abs(Math.sin(index * 9301 + salt * 49297) * 233280) % 1;
 }
 
 export function TwilightFooter() {
+  const { t } = useLanguage();
   const containerRef = useRef(null);
   const reduce = useReducedMotion();
   const isMobile = useIsMobileViewport();
@@ -43,7 +45,7 @@ export function TwilightFooter() {
       <section 
         id="twilight-footer" 
         ref={containerRef} 
-        className="relative w-full h-[150vh] overflow-hidden bg-gradient-to-b from-[#2A000A] via-[#4A0011] to-[#1A0005]"
+        className="relative w-full h-[100vh] md:h-[130vh] lg:h-[150vh] overflow-hidden bg-gradient-to-b from-[#2A000A] via-[#4A0011] to-[#1A0005]"
       >
         {/* 2. The Twilight Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#2A000A] via-[#4A0011] to-[#1A0005] pointer-events-none z-10" />
@@ -71,7 +73,7 @@ export function TwilightFooter() {
 
         {/* 1. UPPER ZONE: The Neon Logo */}
         <div
-          className="absolute left-1/2 top-[30%] z-40 flex w-full -translate-x-1/2 flex-col items-center justify-center px-4"
+          className="absolute left-1/2 top-[20%] md:top-[30%] z-40 flex w-full -translate-x-1/2 flex-col items-center justify-center px-4"
           style={{ translate: 'none' }}
         >
           <div className="relative flex items-center justify-center w-full max-w-lg md:max-w-3xl">
@@ -80,7 +82,7 @@ export function TwilightFooter() {
             {/* The Logo */}
             <img
               src="/donutfinal/neonlogo-footer.webp"
-              alt="Lucky 2000 Neon Logo"
+              alt={t('twilight.neonLogoAlt')}
               width={358}
               height={253}
               loading="lazy"
@@ -97,16 +99,16 @@ export function TwilightFooter() {
         >
           <motion.div
             style={{ y: moonY, willChange: 'transform' }}
-            className="w-[90%] md:w-[70%] max-w-4xl max-h-[45vh] flex justify-center transform-gpu"
+            className="w-[90%] md:w-[70%] max-w-4xl max-h-[50vh] md:max-h-[45vh] flex justify-center transform-gpu"
           >
             <img
               src="/donutfinal/moon.png"
-              alt="Rising Moon"
+              alt={t('twilight.moonAlt')}
               width={1419}
               height={464}
               loading="lazy"
               decoding="async"
-              className="w-full h-full max-h-[45vh] object-contain object-bottom pointer-events-none"
+              className="w-full h-full max-h-[50vh] md:max-h-[45vh] object-contain object-bottom pointer-events-none"
             />
           </motion.div>
         </div>

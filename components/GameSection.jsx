@@ -5,16 +5,17 @@ import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useCanHover, useIsMobileViewport } from '@/lib/useResponsivePerformance';
 import ScallopTransition from './ScallopTransition';
+import { useLanguage } from '@/lib/i18n';
 
 const IG = 'https://instagram.com/luckytwothousand';
 
 /* Box → revealed flavor + image (5 = the lucky winner). */
 const REVEAL = {
-  1: { name: 'Cinnamon Sugar + Vanilla Custard', img: '/donutfinal/game-box1.webp' },
-  2: { name: 'Chocolate Hazelnut', img: '/donutfinal/game-box2.webp' },
-  3: { name: 'Orange Cardamom', img: '/donutfinal/game-box3.webp' },
-  4: { name: 'Strawberries & Cream', img: '/donutfinal/game-box4.webp' },
-  5: { name: 'Lucky Flavor!', img: '/donutfinal/game-box5.webp' },
+  1: { img: '/donutfinal/game-box1.webp' },
+  2: { img: '/donutfinal/game-box2.webp' },
+  3: { img: '/donutfinal/game-box3.webp' },
+  4: { img: '/donutfinal/game-box4.webp' },
+  5: { img: '/donutfinal/game-box5.webp' },
 };
 
 /* Slot-machine scatter — hardcoded → SSR-stable (no hydration drift). */
@@ -34,6 +35,7 @@ const boxItem = {
 };
 
 export default function GameSection() {
+  const { t } = useLanguage();
   const [selectedBox, setSelectedBox] = useState(null);
   const [isPortalReady, setIsPortalReady] = useState(false);
   const reduce = useReducedMotion();
@@ -98,14 +100,14 @@ export default function GameSection() {
         {/* STANDARDIZED HEADER: GET LUCKY */}
         <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-8 md:mb-12">
           <h2 className="font-['Impact'] italic uppercase text-white text-6xl md:text-8xl drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] tracking-wide">
-            GET LUCKY
+            {t('game.heading')}
           </h2>
 
           {/* The Glowing Underline */}
           <div className="w-[80%] max-w-[500px] h-1 md:h-1.5 bg-white mx-auto my-4 shadow-[0_0_15px_rgba(239,46,49,0.8)]"></div>
 
           <p className="font-['Clarendon'] uppercase text-[#EF2E31] font-bold text-sm sm:text-base md:text-xl tracking-[0.12em] sm:tracking-[0.16em] md:tracking-[0.25em] leading-relaxed">
-            TAKE A CHANCE ON OUR WEEKLY MYSTERY DROP
+            {t('game.eyebrow')}
           </p>
         </div>
 
@@ -119,7 +121,7 @@ export default function GameSection() {
           <div className="my-4 md:my-6 flex justify-center z-20 relative">
             <motion.img
               src="/donutfinal/gameqmark.webp"
-              alt="Mystery"
+              alt={t('game.mysteryAlt')}
               width={222}
               height={280}
               loading="lazy"
@@ -149,7 +151,7 @@ export default function GameSection() {
                 whileHover={canHover ? { scale: 1.1, rotate: -5 } : undefined}
                 whileTap={{ scale: 0.95, rotate: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 16 }}
-                aria-label={`Open mystery box ${n}`}
+                aria-label={`${t('game.openBox')} ${n}`}
                 className={`relative min-h-11 min-w-0 touch-manipulation outline-none transform-gpu ${canHover ? 'group' : ''}`}
                 style={{ willChange: 'transform, opacity' }}
               >
@@ -181,7 +183,7 @@ export default function GameSection() {
           className="mx-auto mt-8 md:mt-10 max-w-xl rounded-2xl border-2 border-[#EF2E31] bg-white/80 px-5 md:px-8 py-5 text-center shadow-[0_0_20px_rgba(239,46,49,0.5)] backdrop-blur-sm"
         >
           <p className="font-['Clarendon'] text-base sm:text-lg font-black uppercase tracking-wide text-[#EF2E31] md:text-2xl">
-            4 Regulars. 1 Mystery Drop.
+            {t('game.summary')}
           </p>
         </motion.div>
       </div>
@@ -206,7 +208,7 @@ export default function GameSection() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={stopModalPropagation}
-              aria-label={`Open ${data.name} on Instagram`}
+              aria-label={t('game.openOnInstagram').replace('{flavor}', t(`game.reveal.${selectedBox}`))}
               className={`relative w-full max-w-2xl bg-[#FFC5D0] rounded-3xl shadow-[0_0_40px_rgba(239,46,49,0.5)] border-4 border-[#EF2E31] p-6 md:p-8 flex flex-col items-center justify-center gap-4 md:gap-6 overflow-hidden cursor-pointer ${canHover ? 'group' : ''}`}
               initial={reduce ? { opacity: 0 } : { scale: 1.1, opacity: 0, y: 20 }}
               animate={reduce ? { opacity: 1 } : { scale: 1, opacity: 1, y: 0 }}
@@ -221,7 +223,7 @@ export default function GameSection() {
 
               <motion.img
                 src={data.img}
-                alt="Flavor"
+                alt={t('game.flavorAlt')}
                 width={selectedBox === 5 ? 1536 : 612}
                 height={selectedBox === 5 ? 1024 : 408}
                 loading="lazy"
@@ -232,17 +234,17 @@ export default function GameSection() {
               />
 
               <h2 className="relative z-10 font-['Clarendon'] text-3xl md:text-5xl text-center text-white drop-shadow-[0_0_15px_#EF2E31,0_0_30px_#EF2E31] font-bold leading-tight mt-2">
-                {data.name}
+                {t(`game.reveal.${selectedBox}`)}
               </h2>
 
               <div className="relative z-10 text-center">
                 <p className="font-['Lora'] text-lg md:text-xl text-[#EF2E31] font-bold">
                   {isLucky
-                    ? "You got lucky! Check this week's flavor on Instagram."
-                    : 'No luck yet. The weekly drop is hiding on Instagram.'}
+                    ? t('game.won')
+                    : t('game.tryAgain')}
                 </p>
                 <p className="font-['Lora'] text-base md:text-lg text-[#EF2E31] underline mt-1">
-                  Tap to view on @luckytwothousand
+                  {t('game.tapInstagram')}
                 </p>
               </div>
             </motion.a>

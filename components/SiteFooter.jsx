@@ -1,6 +1,12 @@
+'use client';
+
+import { useLanguage } from '@/lib/i18n';
+
 const IG = 'https://www.instagram.com/luckytwothousand/';
 
 export default function SiteFooter() {
+  const { t } = useLanguage();
+
   return (
     <footer id="site-footer" className="w-full">
       <div className="border-t-4 border-[#EF2E31]" />
@@ -11,7 +17,7 @@ export default function SiteFooter() {
           className="font-['Clarendon'] text-[clamp(34px,7vw,82px)] font-black italic leading-none text-white"
           style={{ textShadow: '0 3px 0 #EF2E31, 0 0 18px rgba(239,46,49,0.75)' }}
         >
-          SEE YOU IN THE MINA!
+          {t('footer.cta')}
         </p>
         <a
           href={IG}
@@ -20,7 +26,7 @@ export default function SiteFooter() {
           className="mt-5 font-['Lora'] text-xl font-bold text-white md:text-2xl"
           style={{ color: '#fff' }}
         >
-          @luckytwothousand
+          {t('footer.instagram')}
         </a>
       </div>
     </footer>

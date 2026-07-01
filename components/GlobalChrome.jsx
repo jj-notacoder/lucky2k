@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion';
 import { useIsMobileViewport } from '@/lib/useResponsivePerformance';
+import { useLanguage } from '@/lib/i18n';
 import PillNav from './PillNav';
 
 const IG = 'https://www.instagram.com/luckytwothousand/';
@@ -31,7 +32,8 @@ function useDarkSectionDetection() {
   return isOverDarkSection;
 }
 
-export default function GlobalChrome({ isArabic, setIsArabic }) {
+export default function GlobalChrome() {
+  const { isArabic, toggleLanguage, t } = useLanguage();
   const isOverDarkSection = useDarkSectionDetection();
   const isMobile = useIsMobileViewport();
   const { scrollY } = useScroll();
@@ -46,14 +48,10 @@ export default function GlobalChrome({ isArabic, setIsArabic }) {
   const [isPastHero, setIsPastHero] = useState(false);
   const [isInstagramHovered, setIsInstagramHovered] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navItems = isArabic ? [
-    { label: '\u0627\u0644\u0646\u0643\u0647\u0627\u062a', href: '#flavors' },
-    { label: '\u0645\u0646 \u0646\u062d\u0646', href: '#about' },
-    { label: '\u0627\u0644\u0645\u0648\u0642\u0639', href: '#location' },
-  ] : [
-    { label: 'Flavors', href: '#flavors' },
-    { label: 'About', href: '#about' },
-    { label: 'Location', href: '#location' },
+  const navItems = [
+    { label: t('nav.flavors'), href: '#flavors' },
+    { label: t('nav.about'), href: '#about' },
+    { label: t('nav.location'), href: '#location' },
   ];
 
   const navControlClasses = isOverDarkSection
@@ -65,10 +63,6 @@ export default function GlobalChrome({ isArabic, setIsArabic }) {
   const navIconColor = isInstagramHovered
     ? isOverDarkSection ? '#EF2E31' : '#FFFFFF'
     : isOverDarkSection ? '#FFFFFF' : '#EF2E31';
-
-  useEffect(() => {
-    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
-  }, [isArabic]);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsPastHero(latest > window.innerHeight * 0.8);
@@ -115,7 +109,7 @@ export default function GlobalChrome({ isArabic, setIsArabic }) {
         <div className="relative z-30 flex justify-start items-center">
           <motion.img
             src="/donutfinal/logo.webp"
-            alt="Lucky 2000"
+            alt={t('nav.logoAlt')}
             width={561}
             height={445}
             loading="eager"
@@ -143,7 +137,8 @@ export default function GlobalChrome({ isArabic, setIsArabic }) {
 
         <div className="relative z-30 flex justify-end items-center gap-2 md:gap-4">
           <button
-            onClick={() => setIsArabic((current) => !current)}
+            onClick={toggleLanguage}
+            aria-label={isArabic ? t('nav.switchToEnglish') : t('nav.switchToArabic')}
             className={`relative z-30 min-h-11 min-w-11 border-2 px-3 md:px-4 py-1 rounded-full text-sm font-bold transition-colors duration-300 touch-manipulation ${navControlClasses}`}
           >
             {isArabic ? 'EN' : '\u0639'}
@@ -153,7 +148,7 @@ export default function GlobalChrome({ isArabic, setIsArabic }) {
             href={IG}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Instagram"
+            aria-label={t('nav.instagramAria')}
             className={`relative z-30 flex min-h-11 min-w-11 items-center justify-center rounded-full transition-colors duration-300 touch-manipulation ${navIconClasses}`}
             style={{ color: navIconColor }}
             onMouseEnter={() => setIsInstagramHovered(true)}
@@ -166,12 +161,12 @@ export default function GlobalChrome({ isArabic, setIsArabic }) {
 
           <button
             type="button"
-            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-label={isMobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             aria-expanded={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen((current) => !current)}
             className={`relative z-30 mobile-only-flex h-11 w-11 items-center justify-center rounded-full border-2 transition-colors duration-300 touch-manipulation ${navControlClasses}`}
           >
-            <span className="sr-only">{isMobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
+            <span className="sr-only">{isMobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}</span>
             <span className="flex w-5 flex-col gap-1.5">
               <span className="block h-0.5 w-full rounded-full bg-current" />
               <span className="block h-0.5 w-full rounded-full bg-current" />
@@ -191,7 +186,7 @@ export default function GlobalChrome({ isArabic, setIsArabic }) {
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className={`fixed left-3 right-3 top-16 z-[9997] md:hidden rounded-2xl border-2 p-2 shadow-[0_16px_40px_rgba(92,15,16,0.22)] backdrop-blur-md ${isOverDarkSection ? 'border-white bg-black/70' : 'border-[#EF2E31] bg-[#FFC5D0]/95'}`}
           >
-            <nav aria-label="Mobile primary navigation" className="flex flex-col gap-1 font-['Clarendon']">
+            <nav aria-label={t('nav.mobilePrimary')} className="flex flex-col gap-1 font-['Clarendon']">
               {navItems.map((item) => (
                 <a
                   key={item.href}

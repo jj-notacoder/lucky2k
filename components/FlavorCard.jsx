@@ -14,6 +14,7 @@ export default function FlavorCard({
   img,
   title,
   sub,
+  flavorKey,
   wide = false,
   highIntensitySparks = false,
   tapes = ['tl', 'br'],
@@ -25,6 +26,8 @@ export default function FlavorCard({
   const cardShadow = wide
     ? 'shadow-[0_0_80px_rgba(255,105,180,0.6),_0_20px_60px_rgba(239,46,49,0.8)]'
     : `shadow-[0_20px_50px_-12px_rgba(239,46,49,0.6)] ${canHover ? 'hover:shadow-[0_30px_60px_-12px_rgba(239,46,49,0.8)]' : ''} transition-shadow duration-500`;
+  const [firstWord, ...restWords] = (title || '').split(' ');
+  const restTitle = restWords.join(' ');
 
   return (
     <motion.div
@@ -55,44 +58,46 @@ export default function FlavorCard({
 
       {wide ? (
         <div className="absolute -top-14 left-0 z-40 desktop-only-flex items-end gap-10 pointer-events-none">
-          <span className="font-['Impact'] text-5xl xl:text-6xl text-[#EF2E31] tracking-wide">LUCKY FLAVOR</span>
-          <span className="font-['Clarendon'] text-sm xl:text-base font-bold text-[#EF2E31] mb-2 ml-4 tracking-[0.28em]">CHANGES EVERY WEEK</span>
+          <span className="font-['Impact'] text-5xl xl:text-6xl text-[#EF2E31] tracking-wide">{title}</span>
+          {sub && (
+            <span className="font-['Clarendon'] text-sm xl:text-base font-bold text-[#EF2E31] mb-2 ml-4 tracking-[0.28em] uppercase">{sub}</span>
+          )}
         </div>
-      ) : title && title.toLowerCase().includes('cinnamon') ? (
+      ) : flavorKey === 'cinnamon' ? (
         <>
           <div className="absolute bottom-full left-0 mb-1 md:mb-2 z-40 desktop-only-block pointer-events-none">
-            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">CINNAMON</span>
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">{firstWord}</span>
           </div>
           <div className="absolute top-2 left-2 z-40 desktop-only-flex flex-col items-start leading-[0.88] pointer-events-none">
-            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">SUGAR</span>
-            <span className="font-['Clarendon'] text-sm xl:text-base font-bold text-white drop-shadow-md mt-1">+VANILLA CUSTARD</span>
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">{restTitle}</span>
+            {sub && <span className="font-['Clarendon'] text-sm xl:text-base font-bold text-white drop-shadow-md mt-1">{sub}</span>}
           </div>
         </>
-      ) : title && title.toLowerCase().includes('chocolate') ? (
+      ) : flavorKey === 'chocolate' ? (
         <>
           <div className="absolute bottom-2 left-2 z-40 desktop-only-block pointer-events-none">
-            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CHOCOLATE</span>
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">{firstWord}</span>
           </div>
           <div className="absolute top-full left-0 mt-1 md:mt-2 z-40 desktop-only-block pointer-events-none">
-            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">HAZELNUT</span>
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">{restTitle}</span>
           </div>
         </>
-      ) : title && title.toLowerCase().includes('orange') ? (
+      ) : flavorKey === 'orange' ? (
         <>
           <div className="absolute bottom-full left-0 mb-1 md:mb-2 z-40 desktop-only-block pointer-events-none">
-            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">ORANGE</span>
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">{firstWord}</span>
           </div>
           <div className="absolute top-2 left-2 z-40 desktop-only-block pointer-events-none">
-            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">CARDAMOM</span>
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">{restTitle}</span>
           </div>
         </>
-      ) : title && title.toLowerCase().includes('strawberr') ? (
+      ) : flavorKey === 'strawberry' ? (
         <>
           <div className="absolute bottom-2 left-2 z-40 desktop-only-block pointer-events-none">
-            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">STRAWBERRIES</span>
+            <span className="font-['Impact'] text-3xl xl:text-4xl text-white drop-shadow-[0_4px_4px_rgba(239,46,49,0.85)] tracking-wide">{firstWord}</span>
           </div>
           <div className="absolute top-full left-0 mt-1 md:mt-2 z-40 desktop-only-block pointer-events-none">
-            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">&amp; CREAM</span>
+            <span className="font-['Impact'] text-4xl xl:text-5xl text-[#EF2E31] tracking-wide">{restTitle}</span>
           </div>
         </>
       ) : null}
