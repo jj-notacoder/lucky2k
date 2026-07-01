@@ -35,11 +35,11 @@ export default function FlavorsSection() {
   const visibleClovers = reduce ? [] : CLOVERS.slice(0, isMobile ? 8 : CLOVERS.length);
 
   return (
-    <section id="flavors" className="relative z-20 w-full pt-24 md:pt-32">
+    <section id="flavors" className="relative z-20 w-full candy-stripes pt-24 md:pt-32">
       {/* CEILING-PINNED SCALLOP TRANSITION */}
       <ScallopTransition />
 
-      <div className="relative overflow-x-clip candy-stripes pb-24 md:pb-32">
+      <div className="relative overflow-x-clip bg-transparent pb-24 md:pb-32">
       {/* dense, more-visible floating clovers */}
       {visibleClovers.map((c, i) => (
         <motion.img

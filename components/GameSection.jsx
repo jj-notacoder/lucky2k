@@ -56,11 +56,11 @@ export default function GameSection() {
   }, [handleCloseModal, selectedBox]);
 
   return (
-    <section id="game" className="relative z-20 w-full pt-24 md:pt-32">
+    <section id="game" className="relative z-20 w-full candy-stripes pt-24 md:pt-32">
       {/* CEILING-PINNED SCALLOP TRANSITION */}
       <ScallopTransition />
 
-      <div className="relative overflow-x-clip candy-stripes pb-12 md:pb-16">
+      <div className="relative overflow-x-clip bg-transparent pb-12 md:pb-16">
       {/* background slot machines (z-0) */}
       {visibleSlots.map((m, i) => (
         <motion.img

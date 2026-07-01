@@ -87,11 +87,11 @@ export default function AboutSection() {
   }, [isMobile, reduce]);
 
   return (
-    <section id="about" className="relative z-20 w-full pt-24 md:pt-32">
+    <section id="about" className="relative z-20 w-full candy-stripes pt-24 md:pt-32">
       {/* CEILING-PINNED SCALLOP TRANSITION */}
       <ScallopTransition />
 
-      <div className="relative overflow-x-clip candy-stripes pb-32 md:pb-40">
+      <div className="relative overflow-x-clip bg-transparent pb-32 md:pb-40">
       {/* floating fuzzy dice */}
       {clientDice.map((d, i) => (
         <motion.img

@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ScallopTransition from './ScallopTransition';
 
-const MAP_SRC =
-  'https://www.google.com/maps?q=22%20Al%20Mutqin%20St%2C%20Zayed%20Port%2C%20Abu%20Dhabi&output=embed';
+const MAP_LINK = 'https://maps.app.goo.gl/xCtYcEf1xkFP7oCC7';
 
 function MapPinIcon() {
   return (
@@ -77,11 +76,11 @@ export default function LocationSection() {
   const [luckyHours] = useState('Friday - Sunday, 7pm - 10pm');
 
   return (
-    <section id="location" className="relative z-20 w-full bg-[#FFC5D0] pt-24 md:pt-32">
+    <section id="location" className="relative z-20 w-full candy-stripes pt-24 md:pt-32">
       {/* CEILING-PINNED SCALLOP TRANSITION */}
       <ScallopTransition />
 
-      <div className="relative overflow-x-clip bg-[#FFC5D0] px-5 pt-16 pb-24 md:px-8 md:pt-20 md:pb-32">
+      <div className="relative overflow-x-clip px-5 pt-16 pb-24 md:px-8 md:pt-20 md:pb-32">
         <div className="mx-auto max-w-6xl">
           {/* STANDARDIZED HEADER: LOCATION */}
           <div className="w-full flex flex-col items-center justify-center text-center relative z-20 mb-12">
@@ -108,15 +107,21 @@ export default function LocationSection() {
               </DetailBlock>
             </div>
 
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border-4 border-[#EF2E31] bg-[#FFC5D0] shadow-[0_0_20px_rgba(239,46,49,0.4)]">
-              <iframe
-                title="Lucky 2000 location map"
-                src={MAP_SRC}
+            <a
+              href={MAP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Lucky 2000 location in Google Maps"
+              className="relative block aspect-[4/3] w-full overflow-hidden rounded-2xl border-4 border-[#EF2E31] bg-[#FFC5D0] shadow-[0_0_20px_rgba(239,46,49,0.4)] transition-transform duration-300 hover:-translate-y-1"
+            >
+              <img
+                src="/donutfinal/map.jpg"
+                alt="Lucky 2000 location map"
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-full w-full grayscale mix-blend-multiply opacity-80"
+                decoding="async"
+                className="h-full w-full object-cover"
               />
-            </div>
+            </a>
           </div>
         </div>
       </div>
