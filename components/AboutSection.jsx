@@ -149,12 +149,12 @@ export default function AboutSection() {
               viewport={{ once: false, amount: 0.4 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               style={{ willChange: 'transform, opacity' }}
-              className="flex w-full flex-col items-center text-center"
+              className="flex w-full flex-col items-center text-center md:pl-6 lg:pl-10"
             >
-              <p className="max-w-xl font-['Lora'] text-base font-bold leading-[1.65] text-[#5C0F10] sm:text-lg md:text-xl lg:text-2xl max-md:font-['Lora']">
+              <p className="max-w-xl font-['Lora'] text-lg font-bold leading-[1.65] text-[#5C0F10] sm:text-xl md:text-2xl lg:text-3xl max-md:font-['Lora']">
                 {t('about.body')}
               </p>
-              <p className="mt-5 font-['Clarendon'] text-base font-bold text-[#EF2E31] md:mt-6 md:text-lg lg:text-xl max-md:font-['Clarendon']">
+              <p className="mt-5 font-['Clarendon'] text-lg font-bold text-[#EF2E31] md:mt-6 md:text-xl lg:text-2xl max-md:font-['Clarendon']">
                 {t('about.hours')}
               </p>
             </motion.div>
