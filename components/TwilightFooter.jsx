@@ -20,8 +20,8 @@ export function TwilightFooter() {
     offset: ["start end", "end end"]
   });
   
-  // Moon starts one viewport below, then rests at its native CSS anchor.
-  const moonY = useTransform(scrollYProgress, [0, 1], reduce ? ["0px", "0px"] : ["100vh", "0px"]);
+  // Reversed Hero-sun physics: hidden below, then rests lower so the full moon is never exposed.
+  const moonY = useTransform(scrollYProgress, [0, 1], ["100%", "40%"]);
   const stars = useMemo(
     () =>
       Array.from({ length: particleCount }).map((_, i) => ({
@@ -43,10 +43,10 @@ export function TwilightFooter() {
       <section 
         id="twilight-footer" 
         ref={sectionRef} 
-        className="relative w-full h-[100dvh] overflow-hidden bg-[#FFC5D0] flex flex-col justify-between"
+        className="relative w-full h-[150vh] overflow-hidden bg-gradient-to-b from-[#2A000A] via-[#4A0011] to-[#1A0005]"
       >
         {/* 2. The Twilight Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black/90 pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2A000A] via-[#4A0011] to-[#1A0005] pointer-events-none z-10" />
 
         {/* 3. The Starry Night (White Flecks) */}
         {stars.map((star, i) => (
@@ -70,7 +70,10 @@ export function TwilightFooter() {
         ))}
 
         {/* 1. UPPER ZONE: The Neon Logo */}
-        <div className="relative z-40 flex-1 flex flex-col items-center justify-center w-full px-4 pt-12 md:pt-20">
+        <div
+          className="absolute left-1/2 top-[30%] z-40 flex w-full -translate-x-1/2 flex-col items-center justify-center px-4"
+          style={{ translate: 'none' }}
+        >
           <div className="relative flex items-center justify-center w-full max-w-lg md:max-w-3xl">
             {/* Ambient Red Glow */}
             <div className="absolute inset-0 bg-[#EF2E31]/40 blur-[80px] md:blur-[120px] rounded-full pointer-events-none" />
@@ -87,18 +90,22 @@ export function TwilightFooter() {
           </div>
         </div>
 
-        {/* THE PARALLAX MOON (Adjusted for strict ceiling/non-overlap) */}
-        <div className="absolute -bottom-12 md:-bottom-72 left-1/2 z-30 mb-16 md:mb-24 -translate-x-1/2 flex w-full justify-center pointer-events-none">
-          <motion.img
-            src="/donutfinal/moon.png"
-            alt="Rising Moon"
-            width={1419}
-            height={464}
-            loading="lazy"
-            decoding="async"
+        {/* THE PARALLAX MOON: Hero sun structure, reversed upward trajectory */}
+        <div className="absolute bottom-0 inset-x-0 z-30 flex w-full justify-center pointer-events-none">
+          <motion.div
             style={{ y: moonY, willChange: 'transform' }}
-            className="w-[85vw] md:w-auto h-auto max-h-[35vh] md:max-h-[40vh] object-contain origin-bottom pointer-events-none transform-gpu"
-          />
+            className="w-[90%] md:w-[70%] max-w-4xl max-h-[45vh] flex justify-center transform-gpu"
+          >
+            <img
+              src="/donutfinal/moon.png"
+              alt="Rising Moon"
+              width={1419}
+              height={464}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full max-h-[45vh] object-contain object-bottom pointer-events-none"
+            />
+          </motion.div>
         </div>
       </section>
     </>
